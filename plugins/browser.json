@@ -27,6 +27,9 @@
     },
     "cordova-plugin-ionic-keyboard": {
       "PACKAGE_NAME": "com.blackoud.ru"
+    },
+    "cordova-build-architecture": {
+      "PACKAGE_NAME": "com.blackoud.ru"
     }
   },
   "dependent_plugins": {}

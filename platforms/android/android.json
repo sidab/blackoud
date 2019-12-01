@@ -51,6 +51,10 @@
             {
               "xml": "<preference name=\"android-minSdkVersion\" value=\"16\" />",
               "count": 1
+            },
+            {
+              "xml": "<preference default=\"arm\" name=\"buildArchitecture\" />",
+              "count": 1
             }
           ]
         }
@@ -110,6 +114,9 @@
       "XWALK_MODE": "embedded",
       "XWALK_MULTIPLEAPK": "true",
       "PACKAGE_NAME": "com.blackoud.ru"
+    },
+    "cordova-build-architecture": {
+      "PACKAGE_NAME": "com.blackoud.ru"
     }
   },
   "dependent_plugins": {},
@@ -156,6 +163,7 @@
     "cordova-plugin-wkwebview-engine": "1.2.1",
     "cordova-plugin-wkwebview-file-xhr": "2.1.1",
     "cordova-plugin-ionic-keyboard": "2.2.0",
-    "cordova-plugin-crosswalk-webview": "2.4.0"
+    "cordova-plugin-crosswalk-webview": "2.4.0",
+    "cordova-build-architecture": "1.0.4"
   }
 }

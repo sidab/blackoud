@@ -72,9 +72,16 @@ body {
     --f7-toolbar-border-color: var(--f7-theme-color);
     --f7-tabbar-label-font-size: 12px;
     --f7-navbar-height: 60px;
-    background: rgba(0, 0, 0, 0.7) !important;
     --f7-bars-translucent-blur: 50px;
     --f7-tabbar-link-inactive-color: #fff;
+}
+
+.toolbar-menu, .navbar-bg  {
+    background: rgba(0, 0, 0, 1) !important;
+}
+
+.device-ios .toolbar-menu, .device-ios .navbar-bg  {
+    background: rgba(0, 0, 0, 0.7) !important;
 }
 
 .toolbar-menu a.tab-link {
@@ -94,10 +101,6 @@ body {
 .navbar {
     --f7-navbar-border-color: var(--f7-theme-color);
     --f7-navbar-text-color: var(--f7-color-white)
-}
-
-.navbar-bg {
-    background: rgba(0, 0, 0, 0.7) !important;
 }
 
 .view {

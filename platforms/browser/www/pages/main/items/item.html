@@ -29,11 +29,11 @@
 
             {{#js_if "this.item.category == 'Ароматы'"}}
 
-                <div class="item-image" style="background-image: url('{{item.image}}')"></div>
+                <div class="item-image aroma" style="background-image: url('{{item.image}}')"></div>
 
             {{else}}
 
-                <div class="item-image" style="background-image: url('{{js "this.item.offers[this.item.activeOffer].image"}}')"></div>
+                <div class="item-image flakon" style="background-image: url('{{js "this.item.offers[this.item.activeOffer].image"}}')"></div>
 
             {{/js_if}}
 
@@ -549,10 +549,17 @@
     }
     .item-image {
         background-repeat: no-repeat;
-        background-size: contain;
         background-position: center;
         background-color: #fff;
         height: 300px;
+    }
+
+    .item-image.flakon {
+        background-size: cover;
+    }
+
+    .item-image.aroma {
+        background-size: contain;
     }
 
     .stepper {
