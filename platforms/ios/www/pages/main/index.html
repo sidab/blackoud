@@ -1,0 +1,391 @@
+<template>
+
+    <div class="page" data-name="home">
+
+        <div class="page-content">
+
+            <div class="swiper-container main-slider text-align-center">
+
+                {{#if mainSlider}}
+
+                    <div class="swiper-wrapper">
+
+                        {{#each mainSlider}}
+
+                            <div class="swiper-slide" style="background-image: url('{{this}}')"></div>
+
+                        {{/each}}
+
+                    </div>
+
+                    <div class="swiper-pagination"></div>
+
+                {{else}}
+
+                    <div class="preloader color-white"></div>
+
+                {{/if}}
+
+            </div>
+
+            <div class="block categories row">
+
+                {{#js_if "app.params.clientType() == 'retail'"}}
+
+                    <a @click="aromas('man')" class="col-50 category lazy text-align-center proxima-nova-cond-bold margin-bottom text-color-white" data-background="img/categories/man.jpg">
+
+                        <div>Мужские<br>ароматы</div>
+
+                    </a>
+
+                    <a @click="aromas('woman')" class="col-50 category lazy text-align-center proxima-nova-cond-bold margin-bottom text-color-white" data-background="img/categories/woman.jpg">
+
+                        <div>Женские<br>ароматы</div>
+
+                    </a>
+
+                {{else}}
+
+                    <a @click="aromas()" class="col category lazy text-align-center proxima-nova-cond-bold margin-bottom text-color-white" data-background="img/categories/man.jpg">
+
+                        <div>Ароматы</div>
+
+                    </a>
+
+                {{/js_if}}
+
+                <a @click="flakons" class="col category lazy text-align-center proxima-nova-cond-bold margin-bottom text-color-white" data-background="img/categories/flakon.jpg">
+
+                    <div>Флаконы</div>
+
+                </a>
+
+            </div>
+
+            <div class="block block-items popularItems">
+
+                <div class="block-title block-title-large text-color-white proxima-nova-cond-bold">Популярные ароматы</div>
+
+                {{#if popularItems}}
+
+                    <div class="items">
+
+                        <div class="items-inner">
+
+                            {{#each popularItems}}
+
+                                <list-item-5 id="{{id}}" image="{{image}}" name="{{name}}" price="{{#js_if "app.params.clientType() == 'retail'"}}{{offers[0].price.main}}{{else}}{{offers[0].price.wholesale}}{{/js_if}}"></list-item-5>
+
+                            {{/each}}
+
+                        </div>
+
+                    </div>
+
+                {{else}}
+
+                    <div class="preloader-parent text-align-center">
+
+                        <div class="preloader color-white"></div>
+
+                    </div>
+
+                {{/if}}
+
+            </div>
+
+            <div class="block block-items newItems">
+
+                <div class="block-title block-title-large text-color-white proxima-nova-cond-bold">Новинки</div>
+
+                {{#if newItems}}
+
+                    <div class="items">
+
+                        <div class="items-inner">
+
+                            {{#each newItems}}
+
+                                <list-item-5 id="{{id}}" image="{{image}}" name="{{name}}" price="{{#js_if "app.params.clientType() == 'retail'"}}{{offers[0].price.main}}{{else}}{{offers[0].price.wholesale}}{{/js_if}}"></list-item-5>
+
+                            {{/each}}
+
+                        </div>
+
+                    </div>
+
+                {{else}}
+
+                    <div class="preloader-parent text-align-center">
+
+                        <div class="preloader color-white"></div>
+
+                    </div>
+
+                {{/if}}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+    {{this}} {
+        background-image: linear-gradient(to bottom, #1f1d1c, #0d0903);
+    }
+
+    {{this}} .main-slider {
+        height: var(--main-slider-height);
+        background-image: linear-gradient(to bottom, #1f1d1c, #0d0903);
+    }
+
+    {{this}} .main-slider .swiper-wrapper {
+                 height: var(--main-slider-height);
+             }
+
+    {{this}} .main-slider .swiper-slide {
+                 height: var(--main-slider-height);
+             }
+
+    {{this}} .main-slider .preloader-parent {
+                 height: 100%;
+             }
+    {{this}} .main-slider .swiper-slide {
+                 background-repeat: no-repeat;
+                 background-size: 100%;
+                 background-position: center;
+             }
+
+    {{this}} .main-slider .swiper-pagination {
+
+             }
+    {{this}} .categories {}
+
+    {{this}} .categories .category {
+        height: var(--home-page-category-height);
+                 font-size: 20px;
+                 display: table;
+                 background-repeat: no-repeat;
+                 background-size: cover;
+                 border: solid 3px var(--f7-theme-color);
+             }
+
+    {{this}} .categories .category div {
+                 vertical-align: middle;
+                 display: table-cell;
+                 line-height: 1.1;
+             }
+
+    {{this}} .block-items .items .item {
+                 width: 200px;
+             }
+
+    {{this}} .block-items .items .items-inner {
+                 overflow-x: scroll;
+                 overflow-y: hidden;
+                 white-space: nowrap;
+                 height: 100%;
+             }
+
+    .block-title {
+        margin-bottom: 20px;
+    }
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            return {
+                mainSlider: null,
+                popularItems: null,
+                newItems: null
+            }
+
+        },
+        methods: {
+
+            flakons: function () {
+
+                app.views.current.router.navigate('/main/items', {
+                    context: {
+                        flakons: true,
+                        filter: {
+                            category: 3
+                        }
+                    }
+                });
+
+            },
+            aromas: function (gender) {
+
+                if (gender == 'man') {
+
+                    var filter = {
+                        filter: {
+                            '1': ['muzhskoy', 'uni']
+                        }
+                    };
+
+                } else if (gender == 'woman') {
+
+                    var filter = {
+                        filter: {
+                            '1': ['zhenshchiny', 'uni']
+                        }
+                    };
+
+                } else {
+
+                    var filter = [];
+
+                }
+
+                app.views.current.router.navigate('/main/items', {
+                    context: {
+                        filter: filter
+                    }
+                });
+
+            },
+            loadItems: function (type, callback) {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                if (type == 'popularItems') {
+
+                    var data = {
+                        filter: {
+                            '3': '1'
+                        }
+                    };
+
+                } else {
+
+                    var data = {
+                        filter: {
+                            '4': '1'
+                        }
+                    };
+
+                }
+
+                app.request.json(app.params.backend + '/api/items/1', data,(response) => {
+
+                    component[type] = response.products;
+
+                    component.$update(function () {
+
+                        if (callback !== undefined) {
+
+                            callback();
+
+                        }
+
+                        setTimeout(function () {
+
+                            page.find('.' + type).find('.item').on('click', function () {
+
+                                var id = $$(this).data('id');
+
+                                var item = component[type].find(function (item) {
+
+                                    return item.id == id;
+
+                                });
+
+                                app.views.current.router.navigate('/main/items/item', {
+                                    context: {
+                                        item: item
+                                    }
+                                });
+
+                            });
+
+                        });
+
+                    });
+
+                });
+
+            },
+            loadMainSlider: function (callback) {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                app.request.json(app.params.backend + '/api/mainSlider', (items) => {
+
+                    component.mainSlider = items;
+
+                    component.$update(function () {
+
+                        var mainSlider = new Swiper(page.find('.main-slider'), {
+                            spaceBetween: 0,
+                            pagination: {
+                                el: '.swiper-pagination',
+                                type: 'bullets',
+                                clickable: true
+                            },
+                            loop: true,
+                            autoplay: {
+                                delay: 3000,
+                            }
+                        });
+
+                        var photoBrowserMainSlider = app.photoBrowser.create({
+                            photos: component.mainSlider,
+                            routableModals: false,
+                            theme: 'dark',
+                            navbar: false
+                        });
+
+                        page.find('.main-slider').find('.swiper-slide').on('click', function () {
+
+                            var index = Number($$(this).data('swiper-slide-index'));
+
+                            photoBrowserMainSlider.open(index);
+
+                        });
+
+                        callback();
+
+                    });
+
+                });
+
+            }
+
+        },
+        on: {
+
+            pageInit: function() {
+
+                var component = this;
+
+                component.loadMainSlider(function () {
+
+                    component.loadItems('popularItems', function () {
+
+                        component.loadItems('newItems');
+
+                    });
+
+                });
+
+            }
+
+        }
+
+    }
+
+</script>

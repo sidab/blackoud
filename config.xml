@@ -79,4 +79,5 @@
     <plugin name="cordova-plugin-crosswalk-webview" spec="2.4.0" />
     <plugin name="cordova-plugin-splashscreen" spec="5.0.3" />
     <plugin name="cordova-plugin-inappbrowser" spec="3.1.0" />
+    <plugin name="cordova-build-architecture" spec="https://github.com/MBuchalik/cordova-build-architecture.git#v1.0.4" />
 </widget>

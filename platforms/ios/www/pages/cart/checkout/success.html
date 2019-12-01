@@ -1,0 +1,108 @@
+<template>
+
+    <div class="page" data-name="cart">
+
+        <div class="navbar navbar-large navbar-large-transparent">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner sliding">
+
+                <div class="title">Заказ оформлен!</div>
+
+                <div class="title-large">
+
+                    <div class="title-large-text">Заказ оформлен!</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            <div class="block margin block-strong">Спасибо ваш заказ оформлен, в ближайшее время наш менеджер свяжется с вами.</div>
+
+            <div class="block">
+
+                <button class="button button-large button-fill">
+
+                    <i class="icon f7-icons">arrow_uturn_left</i>
+
+                    <span>Вернуться к покупкам</span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+    {{this}} {
+        background-image: linear-gradient(to bottom, #1f1d1c, #0d0903);
+    }
+
+    {{this}} .block {
+        border-radius: 5px;
+        font-size: 18px;
+    }
+
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            return {
+
+            }
+
+        },
+        methods: {
+
+        },
+        on: {
+
+            pageInit: function() {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                page.find('.button').on('click', function () {
+
+                    localStorage.cart = '[]';
+
+                    component.$router.navigate('/cart', {
+                        clearPreviousHistory: true
+                    });
+
+                    app.preloader.show();
+
+                    setTimeout(function () {
+
+                        app.preloader.hide();
+
+                        $$('.toolbar-menu').find('a[href="#view-main"]').click();
+
+                        app.views.get('#view-main').router.navigate('/main');
+
+                    }, 500);
+
+                });
+
+            }
+
+        }
+
+    }
+
+</script>
