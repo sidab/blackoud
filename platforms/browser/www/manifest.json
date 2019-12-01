@@ -1,0 +1,19 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "BlackOud",
+  "short_name": "BlackOud",
+  "version": "com.blackoud.ru",
+  "description": "Приложение парфюмерного магазина BlackOud.",
+  "author": "Umakhan Magomedov",
+  "icons": [
+    {
+      "src": "www/icon.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    }
+  ],
+  "orientation": "portrait",
+  "start_url": "index.html",
+  "theme_color": "#be9d60"
+}

@@ -1,0 +1,254 @@
+<template>
+
+    <div class="page theme-dark">
+
+        <div class="navbar">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon f7-icons">xmark</i>
+                        <span>Закрыть</span>
+
+                    </a>
+
+                </div>
+
+                <div class="title">Фильтр</div>
+
+            </div>
+
+        </div>
+
+        <div class="toolbar toolbar-bottom">
+
+            <div class="block">
+
+                <button @click="applyFilter" class="button button-apply apply-filter width-100 button-large button-fill button-raised">Применить</button>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            <div class="block no-margin-bottom">
+
+                <div class="range-slider range-price" data-min="{{minPrice}}" data-max="{{minPrice}}"></div>
+
+                <div class="row margin-top">
+
+                    <div class="col">
+
+                        <div class="price-label price-min">{{js "this.minPrice.toLocaleString('ru-RU')"}}р.</div>
+
+                    </div>
+
+                    <div class="col">
+
+                        <div class="price-label price-max text-align-right">{{js "this.maxPrice.toLocaleString('ru-RU')"}}р.</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="list accordion-list specs">
+
+                <ul>
+
+                    <li>
+
+                        <a class="item-link smart-select smart-select-init" data-open-in="popover" data-close-on-select="true">
+
+                            <select name="sort">
+
+                                <option value="price|asc">Сначала дешевые</option>
+                                <option value="price|desc">Сначала дорогие</option>
+
+                            </select>
+
+                            <div class="item-content">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title">Сортировка</div>
+
+                                </div>
+
+                            </div>
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a class="item-link smart-select smart-select-init" data-open-in="popover" data-close-on-select="true">
+
+                            <select name="gender" multiple>
+
+                                {{#each properties.gender.value}}
+
+                                    <option value="{{slug}}">{{value}}</option>
+
+                                {{/each}}
+
+                            </select>
+
+                            <div class="item-content">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title">Пол</div>
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a class="item-link smart-select smart-select-init" data-open-in="popover" data-close-on-select="true">
+
+                            <select data-id="{{properties.country.id}}" name="country" multiple>
+
+                                {{#each properties.country.value}}
+
+                                    <option value="{{slug}}">{{value}}</option>
+
+                                {{/each}}
+
+                            </select>
+
+                            <div class="item-content">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title">Страна</div>
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+    {{this}} .toolbar {
+        --f7-toolbar-height: 170px
+    }
+
+    {{this}} .button-apply {
+        max-width: 270px;
+        margin: 0 auto;
+    }
+
+    {{this}} .range-price {
+        --f7-range-bar-size: 6px;
+    }
+
+    {{this}} .price-label {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    {{this}} {
+        --f7-list-item-min-height: 50px;
+        --f7-list-item-title-font-size: 18px;
+    }
+
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            return {
+
+            }
+
+        },
+        methods: {
+            applyFilter: function () {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                var sort = page.find('select[name="sort"]').val();
+                var country = page.find('select[name="country"]').val();
+                var gender = page.find('select[name="gender"]').val();
+
+                component.filter = {
+                    price: app.range.get('.range-price').getValue(),
+                    sort: sort,
+                    filter: {
+                        '1': gender,
+                        '5': country
+                    }
+                };
+
+                globalFilter = component.filter;
+
+                component.$router.back({
+                    animate: false
+                });
+
+            }
+        },
+        on: {
+
+            pageInit: function() {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                var rangePrice = app.range.create({
+                    el: page.find('.range-price'),
+                    dual: true,
+                    label: false,
+                    step: 5,
+                    max: component.maxPrice,
+                    min: component.minPrice,
+                    value: [component.minPrice, component.maxPrice],
+                    on: {
+                        change: function (range, value) {
+
+                            page.find('.price-min').text((value[0]).toLocaleString('ru-RU') + ' р');
+                            page.find('.price-max').text((value[1]).toLocaleString('ru-RU') + ' р');
+
+                        }
+                    }
+                });
+
+            }
+
+        }
+
+    }
+
+</script>

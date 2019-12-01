@@ -1,0 +1,140 @@
+<template>
+
+    <div class="page" data-name="about">
+
+        <div class="navbar navbar-large navbar-large-transparent">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner sliding">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon icon-back"></i>
+                        <span>Назад</span>
+
+                    </a>
+
+                </div>
+
+                <div class="title">О компании</div>
+
+                <div class="title-large">
+
+                    <div class="title-large-text">О компании</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            <div class="text text-color-white">
+
+                <div class="image" style="background-image: url(http://new.blackoud.ru/storage/app/media/about/CXorZ4pcMuc.jpg)"></div>
+
+                <div class="padding">
+                    Исторически сложилось, что парфюмерия и духи были прерогативой лишь сильных мира сего.
+                Сегодня же этот продукт благодаря научно-технической революции и падению цен на
+                парфюмерию стал доступен практически каждому среднестатистическому потребителю. И все же,
+                купить духи в том количестве, которого порой хочется каждому человеку, нам не всегда по
+                карману. Поэтому мы ограничиваемся одним, максимум двумя парфюмами вместо всего
+                желаемого многообразия, которое могли бы приобрести в дорогом магазине парфюмерии, будь
+                    кошелек по толще.
+                </div>
+
+                <div class="image" style="background-image: url(http://new.blackoud.ru/storage/app/media/about/IMG_4264.jpg)"></div>
+
+                <div class="padding">
+                    Но теперь у Вас есть возможность обеспечить себе полный парфюмерный гардероб по цене и
+                количеству, которые без сомнения порадуют каждого. Речь идет о посещении нашего магазина
+                разливной парфюмерии оптом и в розницу «Black Oud» и использовании его услуг вместо услуг
+                    обыкновенных парфюмерных бутиков.
+                </div>
+
+                <div class="padding">
+                    Наш магазин предлагает более 500 видов разливных духов от масс-маркета до элит-класса по
+                достаточно низким ценам.
+                </div>
+
+                <div class="image" style="background-image: url(http://new.blackoud.ru/storage/app/media/about/O7KZkLnGlnE.jpg)"></div>
+
+                <div class="padding">
+                Заказывая парфюмерию от {{js "app.params.minOrderSum()"}}р, вы получаете возможность расплатиться по
+                    оптовой цене.
+                </div>
+
+                <div class="padding">
+                    Купить духи в нашем магазине – значит сэкономить и силы, и время, и деньги. Опытный
+                консультант, удобный прайс-лист, каталоги с описанием и доступные цены сделают ваши покупки
+                приятным и быстрым времяпровождением.
+                </div>
+
+                <div class="image" style="background-image: url(http://new.blackoud.ru/storage/app/media/about/IMG_4266.jpg)"></div>
+
+                <div class="padding">
+                Купить парфюмерию в нашем магазине – это также эффективный способ обеспечить себя
+                шикарным выбором ароматов на каждый день не в ущерб своему кошельку. Дешево? Может
+                быть еще дешевле... Мы регулярно обновляем каталог, предлагаем клиентам новые условия и
+                цены. Всего лишь будьте с нами – и вы не пропустите свой шанс на лучший и недорогой парфюм.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+    {{this}} {
+        background-image: linear-gradient(to bottom, #1f1d1c, #0d0903);
+    }
+
+    {{this}} .text {
+        font-size: 16px;
+    }
+
+    {{this}} .image {
+        background-size: cover;
+                 width: 100%;
+                 height: var(--main-slider-height);
+             }
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            return {
+
+            }
+
+        },
+        methods: {
+
+        },
+        on: {
+
+            pageInit: function() {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+
+            }
+
+        }
+
+    }
+
+</script>
