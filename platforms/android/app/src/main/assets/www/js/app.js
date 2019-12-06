@@ -6,7 +6,7 @@ var app = new Framework7({
     root: '#app',
     name: 'Black Oud',
     theme: 'ios',
-    version: 1.2,
+    version: 1.4,
     routes: routes,
     backend: 'http://new.blackoud.ru/',
     dialog: {
@@ -334,23 +334,28 @@ $$(document).on('deviceready', function () {
 
     app.views.create('#view-main', {
         url: '/main',
+        animate: app.device.ios ? true : false,
         main: true
     });
 
     app.views.create('#view-stocks', {
-        url: '/stocks'
+        url: '/stocks',
+        animate: app.device.ios ? true : false
     });
 
     app.views.create('#view-help', {
-        url: '/help'
+        url: '/help',
+        animate: app.device.ios ? true : false
     });
 
     app.views.create('#view-cart', {
-        url: '/cart'
+        url: '/cart',
+        animate: app.device.ios ? true : false
     });
 
     app.views.create('#view-contacts', {
-        url: '/branches'
+        url: '/branches',
+        animate: app.device.ios ? true : false
     });
 
     if (app.device.android) {

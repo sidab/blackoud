@@ -57,6 +57,25 @@
 
                     <ul>
 
+                        {{#if item.brand }}
+
+                            <li>
+
+                                <div class="item-content">
+
+                                    <div class="item-inner">
+
+                                        <div class="item-title">Бренд</div>
+                                        <div class="item-after">{{ item.brand }}</div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        {{/if}}
+
                         {{#js_if "this.item.offers[this.item.activeOffer].properties.country" }}
 
                             <li>

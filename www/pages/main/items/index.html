@@ -114,7 +114,7 @@
 
         </div>
 
-        <div class="page-content">
+        <div class="page-content infinite-scroll-content">
 
             <div class="block block-preloader text-align-center display-none">
 
@@ -148,15 +148,9 @@
 
                         {{#if loadMore}}
 
-                            <div class="block width-100 load-more">
+                            <div class="block text-align-center width-100">
 
-                                <button class="button button-fill button-large button-raised">
-
-                                    <div class="preloader color-white display-none"> <span class="preloader-inner"> <span class="preloader-inner-line"></span> <span class="preloader-inner-line"></span> <span class="preloader-inner-line"></span> <span class="preloader-inner-line"></span> <span class="preloader-inner-line"></span> <span class="preloader-inner-line"></span> <span class="preloader-inner-line"></span> <span class="preloader-inner-line"></span> <span class="preloader-inner-line"></span> <span class="preloader-inner-line"></span> <span class="preloader-inner-line"></span> <span class="preloader-inner-line"></span> </span> </div>
-
-                                    <div class="text">Показать еще</div>
-
-                                </button>
+                                <div class="preloader color-white"></div>
 
                             </div>
 
@@ -195,17 +189,6 @@
     {{this}} {
         background-image: linear-gradient(to bottom, #1f1d1c, #0d0903);
     }
-
-    {{this}} .load-more .button {
-        width: 200px;
-        margin-right: auto;
-        margin-left: auto;
-    }
-
-    {{this}} .load-more .preloader {
-                 width: 20px;
-                 height: 20px;
-             }
 
     {{this}} .block-start .block-start-inner {
                  background: #eee;
@@ -310,6 +293,8 @@
                 var pageNum = Number(pageNum);
 
                 component.loadMore = false;
+
+                page.attr('data-page', pageNum);
 
                 if (component.search) {
 
@@ -421,6 +406,8 @@
 
                                 });
 
+                                component.loading = false;
+
                             });
 
                         });
@@ -456,6 +443,19 @@
 
                     component.loadItems(1);
 
+                });
+
+                page.find('.infinite-scroll-content').on('infinite', function () {
+
+                    if (!component.loading && component.loadMore) {
+
+                        component.loading = true;
+
+                        var pageNum = Number(page.data('page')) + 1;
+
+                        component.loadItems(pageNum);
+
+                    }
                 });
 
             },
