@@ -86,19 +86,37 @@
 
                         <div class="subnavbar theme-dark">
 
-                            <div @click="openFilter" class="subnavbar-inner padding-horizontal disabled">
+                            <div class="subnavbar-inner padding-horizontal disabled">
 
-                                <div class="open-filter">
+                                <div @click="openFilter" class="open-filter">
 
                                     <i class="icon f7-icons text-color-gray">slider_horizontal_3</i>
                                     <span>Фильтр</span>
 
                                 </div>
 
-                                <div class="open-sort">
+                                <div class="open-sort smart-select smart-select-init" data-open-in="popover" data-close-on-select="true">
 
-                                    <i class="icon f7-icons text-color-gray">sort_up</i>
-                                    <span>Сначала дешевые</span>
+                                    <select name="sort">
+
+                                        <option value="price|desc" {{#js_if "this.sort == 'desc'"}}checked{{/js_if}}>Сначала дорогие</option>
+                                        <option value="price|asc" {{#js_if "this.sort == 'asc'"}}checked{{/js_if}}>Сначала дешевые</option>
+
+                                    </select>
+
+                                    {{#js_if "this.sort == 'desc'"}}
+
+                                        <i class="icon f7-icons text-color-gray">sort_down</i>
+
+                                        <span>Сначала дорогие</span>
+
+                                    {{else}}
+
+                                        <i class="icon f7-icons text-color-gray">sort_up</i>
+
+                                        <span>Сначала дешевые</span>
+
+                                    {{/js_if}}
 
                                 </div>
 
@@ -206,7 +224,8 @@
         data: function () {
 
             return {
-                items: null
+                items: null,
+                sort: 'desc'
             }
 
         },
@@ -431,14 +450,6 @@
                 var app = component.$app;
                 var page = component.$el;
 
-                if (typeof globalFilter !== 'undefined') {
-
-                    component.filter = globalFilter;
-
-                    delete globalFilter;
-
-                }
-
                 setTimeout(function () {
 
                     component.loadItems(1);
@@ -458,6 +469,20 @@
                     }
                 });
 
+                page.find('select[name="sort"]').on('change', function () {
+
+                    var value = $$(this).val();
+
+                    component.sort = value;
+
+                    component.filter = {
+                        sort: value
+                    };
+
+                    component.loadItems(1);
+
+                });
+
             },
             pageReinit: function () {
 
@@ -468,9 +493,17 @@
 
                     setTimeout(function () {
 
-                        component.$router.refreshPage();
+                        if (typeof globalFilter !== 'undefined') {
 
-                    });
+                            component.filter = globalFilter;
+
+                            delete globalFilter;
+
+                            component.loadItems(1);
+
+                        }
+
+                    }, app.device.ios ? 1000 : 100);
 
                 }
 
