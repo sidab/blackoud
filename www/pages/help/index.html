@@ -176,7 +176,7 @@
 
                     app.dialog.prompt('', 'Введите пароль', function (value) {
 
-                        var wholesalePassword = localStorage.wholesalePassword;
+                        var wholesalePassword = app.params.config.wholesalePassword;
 
                         if (value === wholesalePassword) {
 

@@ -74,7 +74,7 @@
 
                             {{#each popularItems}}
 
-                                <list-item-5 id="{{id}}" image="{{image}}" name="{{name}}" price="{{#js_if "app.params.clientType() == 'retail'"}}{{offers[0].price.main}}{{else}}{{offers[0].price.wholesale}}{{/js_if}}"></list-item-5>
+                                <list-item-5 id="{{id}}" type="popularItems" image="{{image}}" name="{{name}}" price="{{#js_if "app.params.clientType() == 'retail'"}}{{offers[0].price.main}}{{else}}{{offers[0].price.wholesale}}{{/js_if}}"></list-item-5>
 
                             {{/each}}
 
@@ -106,7 +106,7 @@
 
                             {{#each newItems}}
 
-                                <list-item-5 id="{{id}}" image="{{image}}" name="{{name}}" price="{{#js_if "app.params.clientType() == 'retail'"}}{{offers[0].price.main}}{{else}}{{offers[0].price.wholesale}}{{/js_if}}"></list-item-5>
+                                <list-item-5 id="{{id}}" type="newItems" image="{{image}}" name="{{name}}" price="{{#js_if "app.params.clientType() == 'retail'"}}{{offers[0].price.main}}{{else}}{{offers[0].price.wholesale}}{{/js_if}}"></list-item-5>
 
                             {{/each}}
 
@@ -254,11 +254,97 @@
                 });
 
             },
+            initMainSlider: function () {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                var mainSlider = new Swiper(page.find('.main-slider'), {
+                    spaceBetween: 0,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        type: 'bullets',
+                        clickable: true
+                    },
+                    loop: true,
+                    autoplay: {
+                        delay: 3000,
+                    }
+                });
+
+                var photoBrowserMainSlider = app.photoBrowser.create({
+                    photos: component.mainSlider,
+                    routableModals: false,
+                    theme: 'dark',
+                    navbar: false
+                });
+
+                page.find('.main-slider').find('.swiper-slide').on('click', function () {
+
+                    var index = Number($$(this).data('swiper-slide-index'));
+
+                    photoBrowserMainSlider.open(index);
+
+                });
+
+            },
+            openItem: function (id, type) {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                var item = component[type].find(function (item) {
+
+                    return item.id == id;
+
+                });
+
+                app.views.current.router.navigate('/main/items/item', {
+                    context: {
+                        item: item
+                    }
+                });
+
+            },
             loadItems: function (type, callback) {
 
                 var component = this;
                 var app = component.$app;
                 var page = component.$el;
+
+                var items = localStorage[type];
+
+                if (items !== undefined) {
+
+                    component[type] = JSON.parse(items);
+
+                    setTimeout(function () {
+
+                        component.$update();
+
+                        if (callback) {
+
+                            callback();
+
+                            callback = false;
+
+                        }
+
+                    });
+
+                }
+
+                var lastUpdateDate = Number(localStorage[type + 'LastUpdateDate']);
+
+                var updateInterval = Number(app.params.config[type + 'UpdateInterval']);
+
+                if (lastUpdateDate !== undefined && Date.now() < lastUpdateDate) {
+
+                    return false;
+
+                }
 
                 if (type == 'popularItems') {
 
@@ -282,33 +368,21 @@
 
                     component[type] = response.products;
 
+                    localStorage[type] = JSON.stringify(response.products);
+
+                    localStorage[type + 'LastUpdateDate'] = Date.now() + updateInterval;
+
                     component.$update(function () {
-
-                        if (callback !== undefined) {
-
-                            callback();
-
-                        }
 
                         setTimeout(function () {
 
-                            page.find('.' + type).find('.item').on('click', function () {
+                            if (callback) {
 
-                                var id = $$(this).data('id');
+                                callback();
 
-                                var item = component[type].find(function (item) {
+                                callback = false;
 
-                                    return item.id == id;
-
-                                });
-
-                                app.views.current.router.navigate('/main/items/item', {
-                                    context: {
-                                        item: item
-                                    }
-                                });
-
-                            });
+                            }
 
                         });
 
@@ -323,41 +397,53 @@
                 var app = component.$app;
                 var page = component.$el;
 
+                var items = localStorage.mainSlider;
+
+                if (items !== undefined) {
+
+                    component.mainSlider = JSON.parse(items);
+
+                    setTimeout(function () {
+
+                        component.$update();
+
+                        if (callback) {
+
+                            callback();
+
+                            callback = false;
+
+                        }
+
+                    });
+
+                }
+
+                var lastUpdateDate = Number(localStorage.mainSliderLastUpdateDate);
+
+                var updateInterval = Number(app.params.config.mainSliderUpdateInterval);
+
+                if (lastUpdateDate !== undefined && Date.now() < lastUpdateDate) {
+
+                    return false;
+
+                }
+
                 app.request.json(app.params.backend + '/api/mainSlider', (items) => {
 
                     component.mainSlider = items;
 
+                    localStorage.mainSlider = JSON.stringify(items);
+
+                    localStorage.mainSliderLastUpdateDate = Date.now() + updateInterval;
+
                     component.$update(function () {
 
-                        var mainSlider = new Swiper(page.find('.main-slider'), {
-                            spaceBetween: 0,
-                            pagination: {
-                                el: '.swiper-pagination',
-                                type: 'bullets',
-                                clickable: true
-                            },
-                            loop: true,
-                            autoplay: {
-                                delay: 3000,
-                            }
-                        });
+                        if (callback) {
 
-                        var photoBrowserMainSlider = app.photoBrowser.create({
-                            photos: component.mainSlider,
-                            routableModals: false,
-                            theme: 'dark',
-                            navbar: false
-                        });
+                            callback();
 
-                        page.find('.main-slider').find('.swiper-slide').on('click', function () {
-
-                            var index = Number($$(this).data('swiper-slide-index'));
-
-                            photoBrowserMainSlider.open(index);
-
-                        });
-
-                        callback();
+                        }
 
                     });
 
@@ -371,12 +457,30 @@
             pageInit: function() {
 
                 var component = this;
+                var page = component.$el;
 
                 component.loadMainSlider(function () {
 
+                    setTimeout(function () {
+
+                        component.initMainSlider();
+
+                    });
+
                     component.loadItems('popularItems', function () {
 
-                        component.loadItems('newItems');
+                        component.loadItems('newItems', function () {
+
+                            page.find('.item').on('click', function () {
+
+                                var id = $$(this).data('id');
+                                var type = $$(this).data('type');
+
+                                component.openItem(id, type);
+
+                            });
+
+                        });
 
                     });
 

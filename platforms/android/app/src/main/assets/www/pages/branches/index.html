@@ -90,9 +90,37 @@
                 var page = component.$el;
                 var parser = new DOMParser();
 
+                var items = localStorage.branches;
+
+                if (items !== undefined) {
+
+                    component.items = JSON.parse(items);
+
+                    setTimeout(function () {
+
+                        component.$update();
+
+                    });
+
+                }
+
+                var lastUpdateDate = Number(localStorage.branchesLastUpdateDate);
+
+                var updateInterval = Number(app.params.config.branchesUpdateInterval);
+
+                if (lastUpdateDate !== undefined && Date.now() < lastUpdateDate) {
+
+                    return false;
+
+                }
+
                 app.request.json(app.params.backend + '/api/branches', (response) => {
 
                     component.items = response;
+
+                    localStorage.branches = JSON.stringify(response);
+
+                    localStorage.branchesLastUpdateDate = Date.now() + updateInterval;
 
                     component.$update();
 
@@ -105,13 +133,13 @@
                 var app = component.$app;
                 var page = component.$el;
 
-                var item = component.items.filter(function (item) {
+                var item = component.items.find(function (item) {
 
                     return item.id == id;
 
-                })[0];
+                });
 
-                component.$router.navigate('/branches/branch', {
+                app.views.current.router.navigate('/branches/branch', {
                     context: item
                 });
 

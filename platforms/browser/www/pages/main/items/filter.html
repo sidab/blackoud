@@ -87,6 +87,42 @@
 
                     </li>
 
+                    {{#if brands}}
+
+                        {{#js_if "this.brands.length > 0"}}
+
+                            <li>
+
+                                <a class="item-link smart-select smart-select-init" data-open-in="popup" data-searchbar="true" data-searchbar-placeholder="Введите для поиска..." data-searchbar-disable-text="Отмена">
+
+                                    <select name="brands" multiple>
+
+                                        {{#each brands}}
+
+                                            <option value="{{id}}">{{name}}</option>
+
+                                        {{/each}}
+
+                                    </select>
+
+                                    <div class="item-content">
+
+                                        <div class="item-inner">
+
+                                            <div class="item-title">Бренд</div>
+
+                                        </div>
+
+                                    </div>
+
+                                </a>
+
+                            </li>
+
+                        {{/js_if}}
+
+                    {{/if}}
+
                     <li>
 
                         <a class="item-link smart-select smart-select-init" data-open-in="popover" data-close-on-select="true">
@@ -201,10 +237,12 @@
                 var sort = page.find('select[name="sort"]').val();
                 var country = page.find('select[name="country"]').val();
                 var gender = page.find('select[name="gender"]').val();
+                var brands = page.find('select[name="brands"]').val();
 
                 component.filter = {
                     price: app.range.get('.range-price').getValue(),
                     sort: sort,
+                    brands: brands,
                     filter: {
                         '1': gender,
                         '5': country

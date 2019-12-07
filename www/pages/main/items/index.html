@@ -188,7 +188,7 @@
 
                     <div class="block text-align-center block-start">
 
-                        <div class="padding block-start-inner">Введите название товара в поисковую строку.</div>
+                        <div class="padding block-start-inner text-color-black">Введите название товара в поисковую строку.</div>
 
                     </div>
 
@@ -299,7 +299,8 @@
                     context: {
                         minPrice: component.minPrice,
                         maxPrice: component.maxPrice,
-                        properties: component.properties
+                        properties: component.properties,
+                        brands: component.brands
                     }
                 });
 
@@ -349,6 +350,7 @@
                             component.minPrice = response.minPrice;
                             component.maxPrice = response.maxPrice;
                             component.properties = response.properties;
+                            component.brands = response.brands;
 
                         }
 

@@ -156,9 +156,37 @@ transition: .3s;
                 var page = component.$el;
                 var parser = new DOMParser();
 
+                var items = localStorage.stocks;
+
+                if (items !== undefined) {
+
+                    component.stocks = JSON.parse(items);
+
+                    setTimeout(function () {
+
+                        component.$update();
+
+                    });
+
+                }
+
+                var lastUpdateDate = Number(localStorage.stocksLastUpdateDate);
+
+                var updateInterval = Number(app.params.config.stocksUpdateInterval);
+
+                if (lastUpdateDate !== undefined && Date.now() < lastUpdateDate) {
+
+                    return false;
+
+                }
+
                 app.request.json(app.params.backend + '/api/stocks', (response) => {
 
                     component.stocks = response;
+
+                    localStorage.stocks = JSON.stringify(response);
+
+                    localStorage.stocksLastUpdateDate = Date.now() + updateInterval;
 
                     component.$update();
 

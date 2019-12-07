@@ -6,7 +6,7 @@ var app = new Framework7({
     root: '#app',
     name: 'Black Oud',
     theme: 'ios',
-    version: 1.4,
+    version: 1.5,
     routes: routes,
     backend: 'http://new.blackoud.ru/',
     dialog: {
@@ -110,7 +110,7 @@ var app = new Framework7({
 
     },
     methods: {
-        checkVersion: function () {
+        checkVersion: function (callback) {
 
             var app = this;
 
@@ -137,6 +137,12 @@ var app = new Framework7({
                         }
 
                     });
+
+                }
+
+                if (callback) {
+
+                    callback();
 
                 }
 
@@ -323,7 +329,23 @@ app.request.setup({
 
 $$(document).on('deviceready', function () {
 
-    app.methods.checkVersion();
+    app.methods.checkVersion(function () {
+
+        app.emit('ready');
+
+    });
+
+    if (localStorage.config !== undefined) {
+
+        app.params.config = JSON.parse(localStorage.config);
+
+        setTimeout(function () {
+
+            app.emit('ready');
+
+        });
+
+    }
 
     try {
 
@@ -332,30 +354,40 @@ $$(document).on('deviceready', function () {
 
     } catch (error) {}
 
-    app.views.create('#view-main', {
-        url: '/main',
-        animate: app.device.ios ? true : false,
-        main: true
-    });
+    app.on('ready', function () {
 
-    app.views.create('#view-stocks', {
-        url: '/stocks',
-        animate: app.device.ios ? true : false
-    });
+        app.views.create('#view-main', {
+            url: '/main',
+            animate: app.device.ios ? true : false,
+            main: true
+        });
 
-    app.views.create('#view-help', {
-        url: '/help',
-        animate: app.device.ios ? true : false
-    });
+        app.views.create('#view-stocks', {
+            url: '/stocks',
+            animate: app.device.ios ? true : false
+        });
 
-    app.views.create('#view-cart', {
-        url: '/cart',
-        animate: app.device.ios ? true : false
-    });
+        app.views.create('#view-help', {
+            url: '/help',
+            animate: app.device.ios ? true : false
+        });
 
-    app.views.create('#view-contacts', {
-        url: '/branches',
-        animate: app.device.ios ? true : false
+        app.views.create('#view-cart', {
+            url: '/cart',
+            animate: app.device.ios ? true : false
+        });
+
+        app.views.create('#view-contacts', {
+            url: '/branches',
+            animate: app.device.ios ? true : false
+        });
+
+        setTimeout(function () {
+
+            navigator.splashscreen.hide();
+
+        }, 300);
+
     });
 
     if (app.device.android) {
@@ -365,16 +397,15 @@ $$(document).on('deviceready', function () {
 
     }
 
-    setTimeout(function () {
-
-        navigator.splashscreen.hide();
-
-    }, 300);
-
-
     $$(document).on('backbutton', function (event) {
 
         app.methods.backButton();
+
+    });
+
+    $$(document).on('popup:open', function (event) {
+
+        $$(event.target).addClass('theme-dark');
 
     });
 

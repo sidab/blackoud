@@ -188,7 +188,7 @@ Framework7.registerComponent('list-item-4', {
 Framework7.registerComponent('list-item-5', {
     template: `
 
-        <div data-id="{{$props.id}}" class="item list-item-1 bg-color-white text-align-center display-inline-block margin-right">
+        <div data-id="{{$props.id}}" data-type="{{$props.type}}" class="item list-item-1 bg-color-white text-align-center display-inline-block margin-right">
 
             <div class="item-image" style="background-image: url('{{$props.image}}')"></div>
 
