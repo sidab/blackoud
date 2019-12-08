@@ -861,6 +861,14 @@
 
                 if (component.item.category == 'Флаконы') {
 
+                    if (app.params.clientType() == 'retail') {
+
+                        component.item.priceType = 'main';
+
+                        component.$update();
+
+                    }
+
                     var photoBrowserImage = app.photoBrowser.create({
                         photos: [component.item.offers[activeOfferIndex].image],
                         routableModals: false,
