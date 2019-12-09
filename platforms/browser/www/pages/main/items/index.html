@@ -330,7 +330,11 @@
                     data: component.filter,
                     beforeSend: function () {
 
-                        page.find('.block-preloader').removeClass('display-none');
+                        if (pageNum == 1) {
+
+                            page.find('.block-preloader').removeClass('display-none');
+
+                        }
 
                     },
                     success: function (response) {
@@ -452,11 +456,7 @@
                 var app = component.$app;
                 var page = component.$el;
 
-                setTimeout(function () {
-
-                    component.loadItems(1);
-
-                });
+                component.loadItems(1);
 
                 page.find('.infinite-scroll-content').on('infinite', function () {
 
