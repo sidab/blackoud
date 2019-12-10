@@ -10,9 +10,6 @@
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.blackoud.ru"
     },
-    "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.blackoud.ru"
-    },
     "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "com.blackoud.ru"
     },
@@ -37,6 +34,9 @@
       "PACKAGE_NAME": "com.blackoud.ru"
     },
     "cordova-build-architecture": {
+      "PACKAGE_NAME": "com.blackoud.ru"
+    },
+    "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "com.blackoud.ru"
     }
   },

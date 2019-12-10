@@ -6,7 +6,7 @@ var app = new Framework7({
     root: '#app',
     name: 'Black Oud',
     theme: 'ios',
-    version: 1.6,
+    version: 1.8,
     routes: routes,
     backend: 'http://new.blackoud.ru/',
     dialog: {
@@ -381,6 +381,22 @@ $$(document).on('deviceready', function () {
             url: '/branches',
             animate: app.device.ios ? true : false
         });
+        
+        if (app.device.iphoneX) {
+
+            setTimeout(function () {
+
+                app.statusbar.hide()
+
+                setTimeout(function () {
+
+                    app.statusbar.show()
+
+                });
+
+            });
+
+        }
 
         setTimeout(function () {
 
