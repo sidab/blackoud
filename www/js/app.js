@@ -382,7 +382,7 @@ $$(document).on('deviceready', function () {
             animate: app.device.ios ? true : false
         });
         
-        if (app.device.iphoneX) {
+        if (app.device.iphone) {
 
             setTimeout(function () {
 
