@@ -6,7 +6,7 @@ var app = new Framework7({
     root: '#app',
     name: 'Black Oud',
     theme: 'ios',
-    version: 1.9,
+    version: 2.0,
     routes: routes,
     backend: 'http://new.blackoud.ru/',
     dialog: {
@@ -397,7 +397,7 @@ $$(document).on('deviceready', function () {
 
             navigator.splashscreen.hide();
 
-        }, 300);
+        }, 1000);
 
     });
 
