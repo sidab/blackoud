@@ -6,7 +6,7 @@ var app = new Framework7({
     root: '#app',
     name: 'Black Oud',
     theme: 'ios',
-    version: 1.8,
+    version: 2.1,
     routes: routes,
     backend: 'http://new.blackoud.ru/',
     dialog: {
@@ -382,17 +382,12 @@ $$(document).on('deviceready', function () {
             animate: app.device.ios ? true : false
         });
         
-        if (app.device.iphoneX) {
+        if (app.device.ios) {
 
             setTimeout(function () {
 
-                app.statusbar.hide()
-
-                setTimeout(function () {
-
-                    app.statusbar.show()
-
-                });
+                app.statusbar.hide();
+                app.statusbar.show();
 
             });
 
@@ -402,7 +397,7 @@ $$(document).on('deviceready', function () {
 
             navigator.splashscreen.hide();
 
-        }, 300);
+        }, 1000);
 
     });
 
