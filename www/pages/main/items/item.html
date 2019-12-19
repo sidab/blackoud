@@ -57,6 +57,25 @@
 
                     <ul>
 
+                        {{#if item.sku }}
+
+                        <li>
+
+                            <div class="item-content">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title">Артикул</div>
+                                    <div class="item-after">{{ item.sku }}</div>
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+                        {{/if}}
+
                         {{#if item.brand }}
 
                             <li>
@@ -90,7 +109,7 @@
 
                                             {{#js_if "this.item.offers.length > 1"}}
 
-                                                <div class="choose-offer-block bg-color-primary text-color-white smart-select smart-select-offers">
+                                                <div class="choose-offer-block bg-color-primary text-color-white smart-select smart-select-init smart-select-offers" data-open-in="popover" data-close-on-select="true">
 
                                                     <span class="choose-offer proxima-nova-cond-semibold">{{js "this.item.offers[this.item.activeOffer].properties.country"}}</span>
 
@@ -215,7 +234,7 @@
 
                                             {{#js_if "this.item.offers.length > 1"}}
 
-                                            <div class="choose-offer-block bg-color-primary text-color-white smart-select smart-select-offers">
+                                            <div class="choose-offer-block bg-color-primary text-color-white smart-select smart-select-init smart-select-offers" data-open-in="popover" data-close-on-select="true">
 
                                                 <span class="choose-offer proxima-nova-cond-semibold">{{js "this.item.offers[this.item.activeOffer].properties.color"}}</span>
 
@@ -786,13 +805,6 @@
                         spaceBetween: 30,
                         freeMode: true,
                         slidesPerView: 'auto'
-                    });
-
-                    var smartSelectOffers = app.smartSelect.create({
-                        el: page.find('.smart-select-offers'),
-                        openIn: 'popover',
-                        closeOnSelect: true,
-                        routableModals: false
                     });
 
                     component.stepper = app.stepper.create({

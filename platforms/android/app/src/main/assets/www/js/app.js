@@ -6,7 +6,7 @@ var app = new Framework7({
     root: '#app',
     name: 'Black Oud',
     theme: 'ios',
-    version: 2.1,
+    version: 2.2,
     routes: routes,
     backend: 'http://new.blackoud.ru/',
     dialog: {
