@@ -467,20 +467,18 @@
 
                     component.loadItems('popularItems', function () {
 
-                        component.loadItems('newItems', function () {
-
-                            page.find('.item').on('click', function () {
-
-                                var id = $$(this).data('id');
-                                var type = $$(this).data('type');
-
-                                component.openItem(id, type);
-
-                            });
-
-                        });
+                        component.loadItems('newItems');
 
                     });
+
+                });
+
+                $$(window).on('click', '.page[data-name="home"] .item', function () {
+
+                    var id = $$(this).data('id');
+                    var type = $$(this).data('type');
+
+                    component.openItem(id, type);
 
                 });
 
