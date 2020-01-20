@@ -838,6 +838,10 @@
 
                                     component.stepper.setValue(value);
 
+                                } else {
+
+                                    component.stepper.setValue( app.params.minAromaVolume() );
+
                                 }
 
                             }
@@ -917,6 +921,10 @@
                                 if (value >= app.params.minFlakonsQuantity()) {
 
                                     component.stepper.setValue(value);
+
+                                } else {
+
+                                    component.stepper.setValue( app.params.minFlakonsQuantity() );
 
                                 }
 
@@ -1036,11 +1044,7 @@
 
                                 app.methods.addToCart(component.item.offers[activeOfferIndex], function () {
 
-                                    app.toast.create({
-                                        text: 'Товар добавален в корзину',
-                                        position: 'top',
-                                        cssClass: 'bg-color-green'
-                                    }).open();
+                                    app.dialog.alert('Товар добавлен в корзину');
 
                                 });
 
@@ -1068,21 +1072,13 @@
 
                             if (index !== -1) {
 
-                                app.toast.create({
-                                    text: 'Вы уже добавляли этот товар в корзину',
-                                    position: 'top',
-                                    cssClass: 'bg-color-red'
-                                }).open();
+                                app.dialog.alert('Вы уже добавляли этот товар в корзину');
 
                             } else {
 
                                 app.methods.addToCart(component.item.offers[activeOfferIndex], function () {
 
-                                    app.toast.create({
-                                        text: 'Товар добавален в корзину',
-                                        position: 'top',
-                                        cssClass: 'bg-color-green'
-                                    }).open();
+                                    app.dialog.alert('Товар добавален в корзину');
 
                                 });
 
@@ -1120,21 +1116,13 @@
 
                         if (offerIndex !== -1) {
 
-                            app.toast.create({
-                                text: 'Вы уже добавляли этот товар в корзину',
-                                position: 'top',
-                                cssClass: 'bg-color-red'
-                            }).open();
+                            app.dialog.alert('Вы уже добавляли этот товар в корзину');
 
                         } else {
 
                             app.methods.addToCart(component.item.offers[activeOfferIndex], function () {
 
-                                app.toast.create({
-                                    text: 'Товар добавален в корзину',
-                                    position: 'top',
-                                    cssClass: 'bg-color-green'
-                                }).open();
+                                app.dialog.alert('Товар добавален в корзину');
 
                             });
 

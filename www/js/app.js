@@ -6,7 +6,7 @@ var app = new Framework7({
     root: '#app',
     name: 'Black Oud',
     theme: 'ios',
-    version: 2.3,
+    version: 2.4,
     routes: routes,
     backend: 'http://new.blackoud.ru/',
     dialog: {
@@ -21,7 +21,7 @@ var app = new Framework7({
     },
     toast: {
         closeTimeout: 2000,
-        closeButton: true
+        closeButton: false
     },
     smartSelect: {
         pageBackLinkText: 'Назад',

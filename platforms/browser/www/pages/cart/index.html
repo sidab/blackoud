@@ -268,23 +268,33 @@
                                 on: {
                                     change: function (keypad, value) {
 
-                                        if (value == 0) {
-
-                                            return false;
-
-                                        }
-
                                         if (app.params.clientType() == 'wholesale') {
 
-                                            if (item.type == 'aroma' && value >= 50) {
+                                            if (item.type == 'aroma') {
 
-                                                stepper.setValue(value);
+                                                if (value >= app.params.minAromaVolume()) {
+
+                                                    stepper.setValue(value);
+
+                                                } else {
+
+                                                    stepper.setValue(app.params.minAromaVolume());
+
+                                                }
 
                                             }
 
-                                            if (item.type == 'flakon' && value >= 5) {
+                                            if (item.type == 'flakon') {
 
-                                                stepper.setValue(value);
+                                                if (value >= app.params.minFlakonsQuantity()) {
+
+                                                    stepper.setValue(value);
+
+                                                } else {
+
+                                                    stepper.setValue( app.params.minFlakonsQuantity() );
+
+                                                }
 
                                             }
 
@@ -324,7 +334,7 @@
 
                         page.find('.button-checkout').on('click', function () {
 
-                            component.$router.navigate('/cart/checkout', {
+                            app.views.current.router.navigate('/cart/checkout', {
                                 context: {
                                     items: component.items,
                                     sum: component.sum
