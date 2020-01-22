@@ -6,7 +6,7 @@ var app = new Framework7({
     root: '#app',
     name: 'Black Oud',
     theme: 'ios',
-    version: 2.4,
+    version: 2.5,
     routes: routes,
     backend: 'http://new.blackoud.ru/',
     dialog: {
@@ -31,7 +31,7 @@ var app = new Framework7({
     view: {
         iosDynamicNavbar: false,
         stackPages: true,
-        preloadPreviousPage: false,
+        preloadPreviousPage: true,
         removeElements: false
     },
     photoBrowser: {
