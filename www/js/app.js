@@ -32,7 +32,11 @@ var app = new Framework7({
         iosDynamicNavbar: false,
         stackPages: true,
         preloadPreviousPage: true,
-        removeElements: false
+        removeElements: false,
+        iosSwipeBackAnimateShadow: false,
+        iosSwipeBackAnimateOpacity: false,
+        mdSwipeBackAnimateShadow: false,
+        mdSwipeBackAnimateOpacity: false
     },
     photoBrowser: {
         backLinkText: 'Закрыть',
