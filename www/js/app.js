@@ -8,6 +8,7 @@ var app = new Framework7({
     theme: 'ios',
     version: 2.6,
     routes: routes,
+    init: false,
     backend: 'http://new.blackoud.ru/',
     dialog: {
         buttonOk: 'Ок',
@@ -328,23 +329,25 @@ var app = new Framework7({
 
         }
     }
-}).init();
-
-app.request.setup({
-    beforeSend: function(xhr) {
-
-    },
-    complete: function(xhr) {
-
-        console.log(xhr);
-
-    },
-    error: function () {
-
-    }
 });
 
 $$(document).on('deviceready', function () {
+
+    app.init();
+
+    app.request.setup({
+        beforeSend: function(xhr) {
+
+        },
+        complete: function(xhr) {
+
+            console.log(xhr);
+
+        },
+        error: function () {
+
+        }
+    });
 
     app.methods.checkVersion(function () {
 

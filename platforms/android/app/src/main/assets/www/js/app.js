@@ -6,8 +6,9 @@ var app = new Framework7({
     root: '#app',
     name: 'Black Oud',
     theme: 'ios',
-    version: 2.4,
+    version: 2.6,
     routes: routes,
+    init: false,
     backend: 'http://new.blackoud.ru/',
     dialog: {
         buttonOk: 'Ок',
@@ -31,8 +32,12 @@ var app = new Framework7({
     view: {
         iosDynamicNavbar: false,
         stackPages: true,
-        preloadPreviousPage: false,
-        removeElements: false
+        preloadPreviousPage: true,
+        removeElements: false,
+        iosSwipeBackAnimateShadow: false,
+        iosSwipeBackAnimateOpacity: false,
+        mdSwipeBackAnimateShadow: false,
+        mdSwipeBackAnimateOpacity: false
     },
     photoBrowser: {
         backLinkText: 'Закрыть',
@@ -110,6 +115,19 @@ var app = new Framework7({
 
     },
     methods: {
+        onesignal: function () {
+
+            try {
+
+                window.plugins.OneSignal.startInit('782c773e-296c-4851-a36c-afb036ceb572').endInit();
+
+            } catch (error) {
+
+                console.log(error);
+
+            }
+
+        },
         checkVersion: function (callback) {
 
             var app = this;
@@ -311,23 +329,25 @@ var app = new Framework7({
 
         }
     }
-}).init();
-
-app.request.setup({
-    beforeSend: function(xhr) {
-
-    },
-    complete: function(xhr) {
-
-        console.log(xhr);
-
-    },
-    error: function () {
-
-    }
 });
 
 $$(document).on('deviceready', function () {
+
+    app.init();
+
+    app.request.setup({
+        beforeSend: function(xhr) {
+
+        },
+        complete: function(xhr) {
+
+            console.log(xhr);
+
+        },
+        error: function () {
+
+        }
+    });
 
     app.methods.checkVersion(function () {
 
@@ -355,6 +375,8 @@ $$(document).on('deviceready', function () {
     } catch (error) {}
 
     app.on('ready', function () {
+
+        app.methods.onesignal();
 
         app.views.create('#view-main', {
             url: '/main',

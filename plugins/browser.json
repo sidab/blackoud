@@ -30,6 +30,9 @@
     },
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "com.blackoud.ru"
+    },
+    "onesignal-cordova-plugin": {
+      "PACKAGE_NAME": "com.blackoud.ru"
     }
   },
   "dependent_plugins": {}

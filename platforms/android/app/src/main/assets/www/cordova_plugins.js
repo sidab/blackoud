@@ -32,6 +32,14 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "navigator.splashscreen"
       ]
+    },
+    {
+      "id": "onesignal-cordova-plugin.OneSignal",
+      "file": "plugins/onesignal-cordova-plugin/www/OneSignal.js",
+      "pluginId": "onesignal-cordova-plugin",
+      "clobbers": [
+        "OneSignal"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -43,6 +51,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-ionic-keyboard": "2.2.0",
     "cordova-plugin-crosswalk-webview": "2.4.0",
     "cordova-build-architecture": "1.0.4",
-    "cordova-plugin-splashscreen": "5.0.3"
+    "cordova-plugin-splashscreen": "5.0.3",
+    "onesignal-cordova-plugin": "2.8.2"
   };
 });

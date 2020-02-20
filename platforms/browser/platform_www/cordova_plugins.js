@@ -42,6 +42,14 @@ module.exports = [
         "id": "cordova-plugin-splashscreen.SplashScreenProxy",
         "pluginId": "cordova-plugin-splashscreen",
         "runs": true
+    },
+    {
+        "file": "plugins/onesignal-cordova-plugin/www/OneSignal.js",
+        "id": "onesignal-cordova-plugin.OneSignal",
+        "pluginId": "onesignal-cordova-plugin",
+        "clobbers": [
+            "OneSignal"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -54,7 +62,8 @@ module.exports.metadata =
     "cordova-plugin-wkwebview-file-xhr": "2.1.1",
     "cordova-plugin-ionic-keyboard": "2.2.0",
     "cordova-build-architecture": "1.0.4",
-    "cordova-plugin-splashscreen": "5.0.3"
+    "cordova-plugin-splashscreen": "5.0.3",
+    "onesignal-cordova-plugin": "2.8.2"
 }
 // BOTTOM OF METADATA
 });
