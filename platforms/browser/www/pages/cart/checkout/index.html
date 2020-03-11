@@ -406,12 +406,15 @@
                                         type: type
                                     },
                                     orderNumber: response.data.number,
+                                    orderKey: response.data.key,
                                     manager: manager,
                                     items: component.items,
                                     sum: component.sum
                                 };
 
                                 app.request.post(app.params.backend + '/api/checkout', data, function (response) {
+
+                                    localStorage.cart = '[]';
 
                                     component.$router.navigate('/cart/checkout/success', {
                                         clearPreviousHistory: true

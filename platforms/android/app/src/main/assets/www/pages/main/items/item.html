@@ -396,103 +396,67 @@
 
                 {{/if}}
 
-                <div class="block-price padding-bottom text-color-black">
+                {{#js_if "this.item.offers[this.item.activeOffer].price[this.item.priceType] > 0"}}
 
-                    <div class="item-price text-align-center padding-top">
+                    <div class="block-price padding-bottom text-color-black">
 
-                        <div class="total display-inline-block proxima-nova-cond-bold">
+                        <div class="item-price text-align-center padding-top">
 
-                            <span>{{js "this.item.offers[this.item.activeOffer].price[this.item.priceType]"}}</span> ₽
+                            <div class="total display-inline-block proxima-nova-cond-bold">
 
-                        </div>
-
-                        {{#js_if "this.item.category == 'Ароматы'"}}
-
-                            <div class="gramm padding-left display-inline-block text-align-left text-color-gray">
-
-                                1мл - <span>{{js "this.item.offers[this.item.activeOffer].price[this.item.priceType]"}}</span> ₽
+                                <span>{{js "this.item.offers[this.item.activeOffer].price[this.item.priceType]"}}</span> ₽
 
                             </div>
 
-                        {{else}}
-
-                            {{#js_if "app.params.clientType() == 'wholesale'"}}
+                            {{#js_if "this.item.category == 'Ароматы'"}}
 
                                 <div class="gramm padding-left display-inline-block text-align-left text-color-gray">
 
-                                    1шт - <span>{{js "this.item.offers[this.item.activeOffer].price[this.item.priceType]"}}</span> ₽
+                                    1мл - <span>{{js "this.item.offers[this.item.activeOffer].price[this.item.priceType]"}}</span> ₽
 
                                 </div>
+
+                            {{else}}
+
+                                {{#js_if "app.params.clientType() == 'wholesale'"}}
+
+                                    <div class="gramm padding-left display-inline-block text-align-left text-color-gray">
+
+                                        1шт - <span>{{js "this.item.offers[this.item.activeOffer].price[this.item.priceType]"}}</span> ₽
+
+                                    </div>
+
+                                {{/js_if}}
 
                             {{/js_if}}
 
-                        {{/js_if}}
+                        </div>
 
-                    </div>
+                        {{#js_if "this.item.offers[this.item.activeOffer].properties.active !== '0'" }}
 
-                    {{#js_if "this.item.offers[this.item.activeOffer].properties.active !== '0'" }}
+                            {{#js_if "this.item.category == 'Ароматы'"}}
 
-                        {{#js_if "this.item.category == 'Ароматы'"}}
+                                {{#js_if "app.params.clientType() == 'retail'"}}
 
-                            {{#js_if "app.params.clientType() == 'retail'"}}
+                                    <div class="segmented choose-aroma-type segmented-strong margin-vertical">
 
-                                <div class="segmented choose-aroma-type segmented-strong margin-vertical">
+                                        <button class="button button-active button-large">Духи</button>
 
-                                    <button class="button button-active button-large">Духи</button>
+                                        <button class="button button-large">Масло</button>
 
-                                    <button class="button button-large">Масло</button>
+                                    </div>
 
-                                </div>
+                                    <div class="text-color-gray text-align-center aroma-type-desc margin-bottom">
 
-                                <div class="text-color-gray text-align-center aroma-type-desc margin-bottom">
+                                        <b>Масло</b> - концентрат в чистом виде, без добавления спирта.
 
-                                    <b>Масло</b> - концентрат в чистом виде, без добавления спирта.
+                                        <br>
 
-                                    <br>
+                                        <b>Духи</b> - парфюмерная вода и масло (концентрация смешивания 40% масла и 60% этанола)
 
-                                    <b>Духи</b> - парфюмерная вода и масло (концентрация смешивания 40% масла и 60% этанола)
+                                    </div>
 
-                                </div>
-
-                            {{/js_if}}
-
-                            <div class="stepper display-block width-100">
-
-                                <div class="stepper-inner row">
-
-                                    <div class="minus padding-horizontal text-color-primary proxima-nova-cond-semibold">-</div>
-
-                                    <div class="value text-align-center proxima-nova-cond-regular"><span>{{js "app.params.minAromaVolume()"}}</span> мл</div>
-
-                                    <div class="plus padding-horizontal text-color-primary proxima-nova-cond-semibold">+</div>
-
-                                </div>
-
-                            </div>
-
-                            {{#js_if "app.params.clientType() == 'retail'"}}
-
-                                <div class="choose-flakon button-large margin-bottom button button-outline text-color-primary">
-
-                                    <span class="image margin-bottom display-none"></span>
-
-                                    <span class="action"><i class="icon f7-icons">plus</i>Выбрать флакон</span>
-
-                                </div>
-
-                            {{/js_if}}
-
-                            <div class="button add-to-cart button-fill button-large">
-
-                                <i class="icon f7-icons">cart_badge_plus</i>
-
-                                <span>Купить</span>
-
-                            </div>
-
-                        {{else}}
-
-                            {{#js_if "app.params.clientType() == 'wholesale'"}}
+                                {{/js_if}}
 
                                 <div class="stepper display-block width-100">
 
@@ -500,13 +464,25 @@
 
                                         <div class="minus padding-horizontal text-color-primary proxima-nova-cond-semibold">-</div>
 
-                                        <div class="value text-align-center proxima-nova-cond-regular"><span>{{js "app.params.minFlakonsQuantity()"}}</span> шт</div>
+                                        <div class="value text-align-center proxima-nova-cond-regular"><span>{{js "app.params.minAromaVolume()"}}</span> мл</div>
 
                                         <div class="plus padding-horizontal text-color-primary proxima-nova-cond-semibold">+</div>
 
                                     </div>
 
                                 </div>
+
+                                {{#js_if "app.params.clientType() == 'retail'"}}
+
+                                    <div class="choose-flakon button-large margin-bottom button button-outline text-color-primary">
+
+                                        <span class="image margin-bottom display-none"></span>
+
+                                        <span class="action"><i class="icon f7-icons">plus</i>Выбрать флакон</span>
+
+                                    </div>
+
+                                {{/js_if}}
 
                                 <div class="button add-to-cart button-fill button-large">
 
@@ -518,27 +494,55 @@
 
                             {{else}}
 
-                                {{#if chooseFlakon}}
+                                {{#js_if "app.params.clientType() == 'wholesale'"}}
 
-                                    <div class="margin-vertical">
+                                    <div class="stepper display-block width-100">
 
-                                        <button @click="choose" class="button button-fill button-large">Выбрать</button>
+                                        <div class="stepper-inner row">
+
+                                            <div class="minus padding-horizontal text-color-primary proxima-nova-cond-semibold">-</div>
+
+                                            <div class="value text-align-center proxima-nova-cond-regular"><span>{{js "app.params.minFlakonsQuantity()"}}</span> шт</div>
+
+                                            <div class="plus padding-horizontal text-color-primary proxima-nova-cond-semibold">+</div>
+
+                                        </div>
 
                                     </div>
 
-                                {{/if}}
+                                    <div class="button add-to-cart button-fill button-large">
+
+                                        <i class="icon f7-icons">cart_badge_plus</i>
+
+                                        <span>Купить</span>
+
+                                    </div>
+
+                                {{else}}
+
+                                    {{#if chooseFlakon}}
+
+                                        <div class="margin-vertical">
+
+                                            <button @click="choose" class="button button-fill button-large">Выбрать</button>
+
+                                        </div>
+
+                                    {{/if}}
+
+                                {{/js_if}}
 
                             {{/js_if}}
 
+                        {{else}}
+
+                            <div class="padding text-color-red proxima-nova-cond-bold text-align-center not-empty">Товар распродан.</div>
+
                         {{/js_if}}
 
-                    {{else}}
+                    </div>
 
-                        <div class="padding text-color-red proxima-nova-cond-bold text-align-center not-empty">Товар распродан.</div>
-
-                    {{/js_if}}
-
-                </div>
+                {{/js_if}}
 
             </div>
 

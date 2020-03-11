@@ -6,7 +6,7 @@ var app = new Framework7({
     root: '#app',
     name: 'Black Oud',
     theme: 'ios',
-    version: 2.6,
+    version: 2.7,
     routes: routes,
     init: false,
     backend: 'http://new.blackoud.ru/',
@@ -53,6 +53,14 @@ var app = new Framework7({
         placeholder: 'img/no_image.png',
         threshold: 1000,
         sequential: false
+    },
+    statusbar: {
+        iosOverlaysWebView: false,
+        androidOverlaysWebView: false,
+        iosTextColor: 'white',
+        androidTextColor: 'white',
+        iosBackgroundColor: '#be9d60',
+        androidBackgroundColor: '#be9d60'
     },
     clientType: function () {
 
@@ -403,17 +411,27 @@ $$(document).on('deviceready', function () {
             url: '/branches',
             animate: app.device.ios ? true : false
         });
-        
-        if (app.device.ios) {
 
-            setTimeout(function () {
+        setTimeout(function () {
+
+            if (app.device.ios) {
 
                 app.statusbar.hide();
                 app.statusbar.show();
 
-            });
+                setTimeout(function () {
 
-        }
+                    app.statusbar.setBackgroundColor('#be9d60');
+
+                    app.statusbar.setTextColor('white');
+
+                }, 100);
+
+            }
+
+            navigator.splashscreen.hide();
+
+        }, 1500);
 
         setTimeout(function () {
 
