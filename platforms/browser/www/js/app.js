@@ -6,7 +6,7 @@ var app = new Framework7({
     root: '#app',
     name: 'Black Oud',
     theme: 'ios',
-    version: 2.7,
+    version: 2.9,
     routes: routes,
     init: false,
     backend: 'http://new.blackoud.ru/',
@@ -484,13 +484,13 @@ $$(document).on('deviceready', function () {
 
     $$(window).on('keyboardWillShow', function () {
 
-        $$('.toolbar-menu').css('opacity', '0');
+        $$('.toolbar-menu').css('visibility', 'hidden');
 
     });
 
     $$(window).on('keyboardWillHide', function () {
 
-        $$('.toolbar-menu').css('opacity', '1');
+        $$('.toolbar-menu').css('visibility', 'visible');
 
     });
 

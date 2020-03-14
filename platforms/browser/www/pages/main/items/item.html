@@ -956,6 +956,11 @@
 
                     component.item.activeOffer = offerIndex;
 
+                    activeOfferIndex = component.item.activeOffer;
+                    activeOffer = component.item.offers[activeOfferIndex];
+
+                    activeOffer.image = component.item.image;
+
                     component.$update();
 
                 });
