@@ -959,7 +959,11 @@
                     activeOfferIndex = component.item.activeOffer;
                     activeOffer = component.item.offers[activeOfferIndex];
 
-                    activeOffer.image = component.item.image;
+                    if (component.item.category == 'Ароматы') {
+
+                        activeOffer.image = component.item.image;
+
+                    }
 
                     component.$update();
 
