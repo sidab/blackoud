@@ -61,7 +61,7 @@
 
                 <div class="block">
 
-                    <button class="button button-fill button-checkout button-raised button-large {{#js_if "this.sum < app.params.minOrderSum()"}}disabled{{/js_if}}">Оформить заказ</button>
+                    <button @click="checkout" class="button button-fill button-checkout button-raised button-large {{#js_if "this.sum < app.params.minOrderSum()"}}disabled{{/js_if}}">Оформить заказ</button>
 
                 </div>
 
@@ -111,10 +111,22 @@
 
         },
         methods: {
+            checkout: function () {
+
+                var component = this;
+                var page = component.$el;
+
+                app.views.current.router.navigate('/cart/checkout', {
+                    context: {
+                        items: component.items,
+                        sum: component.sum
+                    }
+                });
+
+            },
             renderCart: function () {
 
                 var component = this;
-                var app = component.$app;
                 var page = component.$el;
 
                 if (localStorage.cart !== undefined && localStorage.cart !== '[]') {
@@ -332,17 +344,6 @@
 
                         });
 
-                        page.find('.button-checkout').on('click', function () {
-
-                            app.views.current.router.navigate('/cart/checkout', {
-                                context: {
-                                    items: component.items,
-                                    sum: component.sum
-                                }
-                            });
-
-                        });
-
                     });
 
                 } else {
@@ -368,7 +369,6 @@
             pageInit: function() {
 
                 var component = this;
-                var app = component.$app;
                 var page = component.$el;
 
                 component.renderCart();
@@ -381,7 +381,7 @@
 
                 app.on('cart:change', function () {
 
-                    app.views.get('#view-cart').router.refreshPage();
+                    //component.renderCart();
 
                 });
 

@@ -6,7 +6,7 @@ var app = new Framework7({
     root: '#app',
     name: 'Black Oud',
     theme: 'ios',
-    version: 3.0,
+    version: 3.1,
     routes: routes,
     init: false,
     backend: 'http://new.blackoud.ru/',
@@ -61,6 +61,9 @@ var app = new Framework7({
         androidTextColor: 'white',
         iosBackgroundColor: '#be9d60',
         androidBackgroundColor: '#be9d60'
+    },
+    popup: {
+      animate: false
     },
     clientType: function () {
 
@@ -388,28 +391,28 @@ $$(document).on('deviceready', function () {
 
         app.views.create('#view-main', {
             url: '/main',
-            animate: app.device.ios ? true : false,
+            animate: app.device.ios ? false : false,
             main: true
         });
 
         app.views.create('#view-stocks', {
             url: '/stocks',
-            animate: app.device.ios ? true : false
+            animate: app.device.ios ? false : false
         });
 
         app.views.create('#view-help', {
             url: '/help',
-            animate: app.device.ios ? true : false
+            animate: app.device.ios ? false : false
         });
 
         app.views.create('#view-cart', {
             url: '/cart',
-            animate: app.device.ios ? true : false
+            animate: app.device.ios ? false : false
         });
 
         app.views.create('#view-contacts', {
             url: '/branches',
-            animate: app.device.ios ? true : false
+            animate: app.device.ios ? false : false
         });
 
         setTimeout(function () {

@@ -37,7 +37,7 @@
 
         <div class="page-content">
 
-            <div class="block no-margin-bottom">
+            <div class="block no-margin-bottom display-none">
 
                 <div class="range-slider range-price" data-min="{{minPrice}}" data-max="{{minPrice}}"></div>
 
@@ -69,8 +69,8 @@
 
                             <select name="sort">
 
+                                <option value="price|desc" checked>Сначала дорогие</option>
                                 <option value="price|asc">Сначала дешевые</option>
-                                <option value="price|desc">Сначала дорогие</option>
 
                             </select>
 
@@ -93,7 +93,7 @@
 
                             <li>
 
-                                <a class="item-link smart-select smart-select-init" data-open-in="popup" data-searchbar="true" data-searchbar-placeholder="Введите для поиска..." data-searchbar-disable-text="Отмена">
+                                <a class="item-link smart-select smart-select-init" data-open-in="popup" data-animate="false" data-searchbar="true" data-searchbar-placeholder="Введите для поиска..." data-searchbar-disable-text="Отмена">
 
                                     <select name="brands" multiple>
 
