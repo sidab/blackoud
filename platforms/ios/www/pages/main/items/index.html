@@ -1,0 +1,520 @@
+<template>
+
+    <div class="page" data-name="items">
+
+        <div class="navbar">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner">
+
+                {{#if search}}
+
+                    <div class="left">
+
+                        <a @click="closeSearch" href="#" class="link">
+
+                            <i class="icon icon-back"></i>
+                            <span>Назад</span>
+
+                        </a>
+
+                    </div>
+
+                    <div class="title">Поиск</div>
+
+                    <div class="subnavbar bg-color-primary">
+
+                        <div class="searchbar">
+
+                            <div class="searchbar-inner">
+
+                                <div class="searchbar-input-wrap">
+
+                                    <input type="search" placeholder="Введите запрос для поиска...">
+
+                                    <i class="searchbar-icon"></i>
+
+                                    <span class="input-clear-button"></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {{else}}
+
+                    <div class="left">
+
+                        <a href="#" class="link back">
+
+                            <i class="icon icon-back"></i>
+                            <span>Назад</span>
+
+                        </a>
+
+                    </div>
+
+                    <div class="title">
+
+                        {{#if flakons}}
+
+                            Флаконы
+
+                        {{else}}
+
+                            Ароматы
+
+                        {{/if}}
+
+                    </div>
+
+                    <div class="right">
+
+                        <a @click="openSearch" href="#" class="link">
+
+                            <i class="icon f7-icons">search</i>
+
+                        </a>
+
+                    </div>
+
+                    {{#js_if "!this.flakons"}}
+
+                        <div class="subnavbar theme-dark">
+
+                            <div class="subnavbar-inner padding-horizontal disabled">
+
+                                <div @click="openFilter" class="open-filter">
+
+                                    <i class="icon f7-icons text-color-gray">slider_horizontal_3</i>
+                                    <span>Фильтр</span>
+
+                                </div>
+
+                                <div class="open-sort smart-select smart-select-init" data-open-in="popover" data-close-on-select="true">
+
+                                    <select name="sort">
+
+                                        <option value="price|desc" {{#js_if "this.sort == 'desc'"}}checked{{/js_if}}>Сначала дорогие</option>
+                                        <option value="price|asc" {{#js_if "this.sort == 'asc'"}}checked{{/js_if}}>Сначала дешевые</option>
+
+                                    </select>
+
+                                    {{#js_if "this.sort == 'desc'"}}
+
+                                        <i class="icon f7-icons text-color-gray">sort_down</i>
+
+                                        <span>Сначала дорогие</span>
+
+                                    {{else}}
+
+                                        <i class="icon f7-icons text-color-gray">sort_up</i>
+
+                                        <span>Сначала дешевые</span>
+
+                                    {{/js_if}}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {{/js_if}}
+
+                {{/if}}
+
+            </div>
+
+        </div>
+
+        <div class="page-content infinite-scroll-content">
+
+            <div class="block block-preloader text-align-center display-none">
+
+                <div class="preloader color-white"></div>
+
+            </div>
+
+            {{#if items}}
+
+                {{#js_if "this.items.length > 0"}}
+
+                    <div class="items margin row">
+
+                        {{#if flakons}}
+
+                            {{#each items}}
+
+                                <list-item-2 {{#if ../minVolume}}{{#js_if "Number(@root.minVolume) !== Number(this.properties.volume)"}}class="item-disabled"{{/js_if}}{{/if}} id="{{id}}" image="{{offers[0].image}}" name="{{name}}" price="{{#js_if "app.params.clientType() == 'retail'"}}{{offers[0].price.main}}{{else}}{{offers[0].price.wholesale}}{{/js_if}}"></list-item-2>
+
+                            {{/each}}
+
+                        {{else}}
+
+                            {{#each items}}
+
+                                <list-item-1 class="display-none" id="{{id}}" image="{{image}}" name="{{name}}" price="{{#js_if "app.params.clientType() == 'retail'"}}{{offers[0].price.main}}{{else}}{{offers[0].price.wholesale}}{{/js_if}}"></list-item-1>
+
+                            {{/each}}
+
+                        {{/if}}
+
+                        {{#if loadMore}}
+
+                            <div class="block text-align-center width-100">
+
+                                <div class="preloader color-white"></div>
+
+                            </div>
+
+                        {{/if}}
+
+                    </div>
+
+                {{else}}
+
+                    <div class="block text-color-white">По вашему запросу ничего не найдено.</div>
+
+                {{/js_if}}
+
+            {{else}}
+
+                {{#if search}}
+
+                    <div class="block text-align-center block-start">
+
+                        <div class="padding block-start-inner text-color-black">Введите название товара в поисковую строку.</div>
+
+                    </div>
+
+                {{/if}}
+
+            {{/if}}
+
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+    {{this}} {
+        background-image: linear-gradient(to bottom, #1f1d1c, #0d0903);
+    }
+
+    {{this}} .block-start .block-start-inner {
+                 background: #eee;
+                 font-size: 18px;
+                 font-weight: bold;
+                 border-right: 3px;
+             }
+
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            return {
+                items: null,
+                sort: 'desc'
+            }
+
+        },
+        methods: {
+            closeSearch: function () {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                component.search = false;
+                component.items = component.oldItems;
+
+                component.$update(function () {
+
+                    component.loadItems(1);
+
+                });
+
+            },
+            openSearch: function () {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                component.search = true;
+                component.oldItems = component.items;
+                component.items = false;
+
+                component.$update(function () {
+
+                    if (!app.device.ios) {
+
+                        setTimeout(function () {
+
+                            page.find('input').focus();
+
+                        }, 500);
+
+                    }
+
+                    page.find('input').on('keypress', function (e) {
+
+                        var query = $$(this).val();
+
+                        if(e.which == 13 && query.length > 0) {
+
+                            document.activeElement.blur();
+
+                            $$(this).blur();
+
+                            component.query = query;
+
+                            component.loadItems(1);
+
+                        }
+
+                    });
+
+                });
+
+            },
+            openFilter: function () {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                component.$router.navigate('/main/items/filter', {
+                    context: {
+                        minPrice: component.minPrice,
+                        maxPrice: component.maxPrice,
+                        properties: component.properties,
+                        brands: component.brands
+                    }
+                });
+
+            },
+            loadItems: function (pageNum, callback) {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+                var pageNum = Number(pageNum);
+
+                component.loadMore = false;
+
+                page.attr('data-page', pageNum);
+
+                if (component.search) {
+
+                    component.filter = {
+                        search: component.query
+                    };
+
+                }
+
+                app.request({
+                    url: app.params.backend + '/api/items/' + pageNum,
+                    dataType: 'json',
+                    data: component.filter,
+                    beforeSend: function () {
+
+                        if (pageNum == 1) {
+
+                            page.find('.block-preloader').removeClass('display-none');
+
+                            page.find('.page-content').scrollTop(0);
+
+                        }
+
+                    },
+                    success: function (response) {
+
+                        if (response.products.length == 0) {
+
+                            component.items = [];
+
+                            component.$update();
+
+                            return false;
+
+                        }
+
+                        if (!component.search) {
+
+                            component.minPrice = response.minPrice;
+                            component.maxPrice = response.maxPrice;
+                            component.properties = response.properties;
+                            component.brands = response.brands;
+
+                        }
+
+                        if (pageNum > 1) {
+
+                            component.items = component.items.concat(response.products);
+
+                        } else {
+
+                            component.items = response.products;
+
+                        }
+
+                        if (response.nextPage) {
+
+                            component.loadMore = true;
+
+                        }
+
+                        component.$update(function () {
+
+                            if (callback !== undefined) {
+
+                                callback();
+
+                            }
+
+                            setTimeout(function () {
+
+                                if (!component.search && pageNum == 1) {
+
+                                    page.find('.navbar').find('.subnavbar').find('.subnavbar-inner').removeClass('disabled');
+
+                                }
+
+                                if (response.nextPage) {
+
+                                    page.find('.load-more').find('.button').off('click').on('click', function () {
+
+                                        var button = $$(this);
+
+                                        button.find('.preloader').removeClass('display-none');
+                                        button.find('.text').addClass('display-none');
+
+                                        component.loadMore = false;
+
+                                        component.loadItems(+pageNum + 1, function () {
+
+                                            button.find('.preloader').addClass('display-none');
+                                            button.find('.text').removeClass('display-none');
+
+                                        });
+
+                                    });
+
+                                }
+
+                                page.find('.item:not(.item-disabled)').off('click').on('click', function (e) {
+
+                                    var id = $$(this).data('id');
+
+                                    var item = component.items.find(function (item) {
+
+                                        return item.id == id;
+
+                                    });
+
+                                    component.$router.navigate('/main/items/item', {
+                                        context: {
+                                            item: item,
+                                            chooseFlakon: component.chooseFlakon
+                                        }
+                                    });
+
+                                });
+
+                                component.loading = false;
+
+                            });
+
+                        });
+
+                    },
+                    complete: function () {
+
+                        page.find('.block-preloader').addClass('display-none');
+
+                    }
+                });
+
+            }
+
+        },
+        on: {
+
+            pageInit: function() {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                component.loadItems(1);
+
+                page.find('.infinite-scroll-content').on('infinite', function () {
+
+                    if (!component.loading && component.loadMore) {
+
+                        component.loading = true;
+
+                        var pageNum = Number(page.data('page')) + 1;
+
+                        component.loadItems(pageNum);
+
+                    }
+                });
+
+                page.find('select[name="sort"]').on('change', function () {
+
+                    var value = $$(this).val();
+
+                    component.sort = value;
+
+                    component.filter = {
+                        sort: value
+                    };
+
+                    component.loadItems(1);
+
+                });
+
+            },
+            pageReinit: function () {
+
+                var component = this;
+                var page = this.$el;
+
+                if (component.$router.previousRoute.path.indexOf('filter') !== -1) {
+
+                    setTimeout(function () {
+
+                        if (typeof globalFilter !== 'undefined') {
+
+                            component.filter = globalFilter;
+
+                            delete globalFilter;
+
+                            component.loadItems(1);
+
+                        }
+
+                    }, app.device.ios ? 1000 : 100);
+
+                }
+
+            }
+
+        }
+
+    }
+
+</script>

@@ -1,0 +1,452 @@
+<template>
+
+    <div class="page" data-name="checkout">
+
+        <div class="navbar navbar-large navbar-large-transparent">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner sliding">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon icon-back"></i>
+
+                        <span>Назад</span>
+
+                    </a>
+
+                </div>
+
+                <div class="title">Оформление заказа</div>
+
+                <div class="title-large">
+
+                    <div class="title-large-text">Оформление заказа</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            <form class="list margin form-store-data" id="form-checkout">
+
+                <ul>
+
+                    <li class="item-content item-input item-input-outline">
+
+                        <div class="item-inner">
+
+                            <div class="item-title item-floating-label">Email</div>
+
+                            <div class="item-input-wrap">
+
+                                <input type="email" name="email" class="email" placeholder="ivan@mail.ru">
+                                <span class="input-clear-button"></span>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+                    
+                    <li class="item-content item-input item-input-outline">
+
+                        <div class="item-inner">
+
+                            <div class="item-title item-floating-label"><b class="text-color-red">*</b>ФИО</div>
+
+                            <div class="item-input-wrap">
+
+                                <input type="text" name="fio" class="fio" placeholder="Иванов Иван Иванович">
+                                <span class="input-clear-button"></span>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                    <li class="item-content item-input item-input-outline">
+
+                        <div class="item-inner">
+
+                            <div class="item-title item-floating-label"><b class="text-color-red">*</b>Город</div>
+
+                            <div class="item-input-wrap">
+
+                                <input type="text" name="city" class="city" placeholder="Введите название вашего города">
+                                <span class="input-clear-button"></span>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                    <li class="item-content item-input item-input-outline">
+
+                        <div class="item-inner">
+
+                            <div class="item-title item-floating-label"><b class="text-color-red">*</b>Адрес</div>
+
+                            <div class="item-input-wrap">
+
+                                <input type="text" name="adres" class="adres" placeholder="Укажите адрес доставки">
+                                <span class="input-clear-button"></span>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                    <li class="item-content item-input item-input-outline">
+
+                        <div class="item-inner">
+
+                            <div class="item-title item-floating-label">Индекс</div>
+
+                            <div class="item-input-wrap">
+
+                                <input type="text" name="postcode" class="postcode" placeholder="Укажите индекс">
+                                <span class="input-clear-button"></span>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                    <li class="item-content item-input item-input-outline">
+
+                        <div class="item-inner">
+
+                            <div class="item-title item-floating-label"><b class="text-color-red">*</b>Телефон</div>
+
+                            <div class="item-input-wrap">
+
+                                <input type="tel" name="phone" class="phone" placeholder="+7(999)999-99-99">
+                                <span class="input-clear-button"></span>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                    {{#js_if "app.params.clientType() == 'wholesale'"}}
+
+                        <li>
+
+                            <div class="item-content item-input item-input-outline">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title item-label">Менеджер</div>
+
+                                    <div class="item-input-wrap">
+
+                                        <select name="manager">
+
+                                            <option value="Все" selected>Все</option>
+                                            <option value="Заур">Заур</option>
+                                            <option value="Адлан">Адлан</option>
+                                            <option value="Джахбар">Джахбар</option>
+
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+                    {{/js_if}}
+
+                    <li class="item-content item-input item-input-outline padding-bottom">
+
+                        <div class="item-inner">
+
+                            <div class="item-title item-floating-label">Комментарий к заказу</div>
+
+                            <div class="item-input-wrap">
+
+                                <textarea class="comment" placeholder="Введите текст..."></textarea>
+                                <span class="input-clear-button"></span>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                </ul>
+
+            </form>
+
+            <div class="block">
+
+                <button @click="checkFields" class="button button-fill button-checkout button-raised button-large">
+
+                    <div class="preloader color-white display-none"></div>
+
+                    <span class="button-title">Оформить заказ</span>
+
+                </button>
+
+            </div>
+            
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+    {{this}} {
+        background-image: linear-gradient(to bottom, #1f1d1c, #0d0903);
+    }
+
+    {{this}} .list ul {
+        border-radius: 5px;
+    }
+
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            return {
+
+            }
+
+        },
+        methods: {
+            
+            checkFields: function () {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                var errorToast = app.toast.create({
+                    text: 'Заполните все обязательные поля!',
+                    position: 'top',
+                    cssClass: 'bg-color-red'
+                });
+
+                if (page.find('.fio').val().length == 0) {
+
+                    errorToast.open()
+
+                    return false;
+
+                }
+
+                if (page.find('.city').val().length == 0) {
+
+                    errorToast.open()
+
+                    return false;
+
+                }
+
+                if (page.find('.adres').val().length == 0) {
+
+                    errorToast.open()
+
+                    return false;
+
+                }
+
+                if (page.find('.phone').val().length == 0) {
+
+                    errorToast.open()
+
+                    return false;
+
+                }
+                
+                component.save();
+
+            },
+            save: function () {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                page.find('.button').find('.button-title').addClass('display-none');
+                page.find('.button').find('.preloader').removeClass('display-none');
+
+                var email = page.find('.email').val();
+                var fio = page.find('.fio').val();
+                var city = page.find('.city').val();
+                var adres = page.find('.adres').val();
+                var postcode = page.find('.postcode').val();
+                var phone = page.find('.phone').val();
+                var comment = page.find('.comment').val();
+                var manager;
+
+                if (app.params.clientType() == 'retail') {
+
+                    manager = 'Все';
+
+                } else {
+
+                    manager = page.find('select[name="manager"]').val();
+
+                }
+
+                var type = app.params.clientType();
+
+                var offers = [];
+
+                for (var i = 0; i < component.items.length; i++) {
+
+                    var offer = component.items[i];
+
+                    if (app.params.clientType() == 'retail') {
+
+                        offers.push({
+                            'offer_id': offer.id,
+                            'quantity': offer.aromaType == 'Духи' ? (Number(offer.volume) * 0.4).toFixed(1) : offer.volume,
+                            'property': {
+                                'flakon': app.params.backend + 'backend/lovata/shopaholic/offers/update/' + offer.flakon.id,
+                                'uid': offer.uid
+                            }
+                        });
+
+                        offers.push({
+                            'offer_id': offer.flakon.id,
+                            'quantity': 1,
+                            'property': {
+                                'aroma': app.params.backend + 'backend/lovata/shopaholic/offers/update/' + offer.id,
+                                'uid': offer.uid
+                            }
+                        });
+
+                    } else {
+
+                        offers.push({
+                            'offer_id': offer.id,
+                            'quantity': offer.type == 'aroma' ? offer.volume : offer.count
+                        });
+
+                    }
+
+                }
+
+                var data = {
+                    'cart': offers
+                };
+
+                console.log(data);
+
+                app.request({
+                    url: app.params.backend + '/api/cart',
+                    crossDomain: false,
+                    method: 'POST',
+                    headers: {
+                        'X-OCTOBER-REQUEST-HANDLER': 'Cart::onAdd'
+                    },
+                    data: data,
+                    dataType: 'json',
+                    success: function(response) {
+
+                        console.log(response);
+
+                        var data = {
+                            'user': {
+                                'email': page.find('.email').val(),
+                                'name': page.find('.fio').val(),
+                                'phone': page.find('.phone').val(),
+                                'shipping_city': city,
+                                'shipping_street': adres,
+                                'shipping_postcode': postcode,
+                                'comment': comment,
+                                'manager': manager,
+                                'type': type == 'retail' ? 'Розничный' : 'Оптовый'
+                            }
+                        };
+
+                        app.request({
+                            url: app.params.backend + '/api/checkout',
+                            crossDomain: false,
+                            method: 'POST',
+                            headers: {
+                                'X-OCTOBER-REQUEST-HANDLER': 'MakeOrder::onCreate'
+                            },
+                            data: data,
+                            dataType: 'json',
+                            success: function(response) {
+
+                                console.log(response);
+
+                                var data = {
+                                    client: {
+                                        email: email,
+                                        fio: fio,
+                                        city: city,
+                                        adres: adres,
+                                        phone: phone,
+                                        comment: comment,
+                                        type: type
+                                    },
+                                    orderNumber: response.data.number,
+                                    orderKey: response.data.key,
+                                    manager: manager,
+                                    items: component.items,
+                                    sum: component.sum
+                                };
+
+                                app.request.post(app.params.backend + '/api/checkout', data, function (response) {
+
+                                    localStorage.cart = '[]';
+
+                                    component.$router.navigate('/cart/checkout/success', {
+                                        clearPreviousHistory: true
+                                    });
+
+                                });
+
+                            }
+                        });
+
+                    }
+                });
+
+            }
+
+        },
+        on: {
+
+            pageInit: function() {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                var phoneMask = new IMask(page.find('input.phone')[0], {
+                    mask: '+{7}(000)000-00-00'
+                });
+
+            }
+
+        }
+
+    }
+
+</script>

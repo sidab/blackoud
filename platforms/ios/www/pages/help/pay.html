@@ -1,0 +1,133 @@
+<template>
+
+    <div class="page" data-name="pay">
+
+        <div class="navbar navbar-large navbar-large-transparent">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner sliding">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon icon-back"></i>
+                        <span>Назад</span>
+
+                    </a>
+
+                </div>
+
+                <div class="title">Способы оплаты</div>
+
+                <div class="title-large">
+
+                    <div class="title-large-text">Способы оплаты</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            <div class="margin payment-images">
+
+                <img src="https://plmuskus.ru/upload/pay-icon_visa.png" class="margin-right">
+                <img src="https://plmuskus.ru/upload/pay-icon_mastercard.png" class="margin-right">
+                <img src="https://plmuskus.ru/upload/pay-icon_mir.png">
+
+            </div>
+
+            <div class="margin">
+
+                <div class="padding payment text-color-black">
+
+                    <div class="proxima-nova-cond-semibold margin-bottom">
+
+                        <i class="icon f7-icons margin-right text-color-primary">creditcard</i>
+                        <span>Банковской картой онлайн</span>
+
+                    </div>
+
+                    <div class="proxima-nova-cond-semibold margin-bottom">
+
+                        <i class="icon f7-icons margin-right text-color-primary">creditcard</i>
+                        <span>Эквайринг</span>
+
+                    </div>
+
+                    <div class="proxima-nova-cond-semibold margin-bottom">
+
+                        <i class="icon f7-icons margin-right text-color-primary">money_rubl_circle</i>
+                        <span>Наличный расчет</span>
+
+                    </div>
+
+                    <div class="proxima-nova-cond-semibold">
+
+                        <i class="icon f7-icons margin-right text-color-primary">doc_text</i>
+                        <span>Оплата юр. лицу</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+    {{this}} {
+        background-image: linear-gradient(to bottom, #1f1d1c, #0d0903);
+    }
+
+    {{this}} .payment {
+                 background-color: #eee;
+                 border-radius: 10px;
+                 font-size: 23px;
+             }
+
+    {{this}} .payment-images img {
+        border-radius: 5px;
+                 width: 100px;
+             }
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            return {
+
+            }
+
+        },
+        methods: {
+
+        },
+        on: {
+
+            pageInit: function() {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+
+            }
+
+        }
+
+    }
+
+</script>

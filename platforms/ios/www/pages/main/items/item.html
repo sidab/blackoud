@@ -1,0 +1,1154 @@
+<template>
+
+    <div class="page" data-name="item">
+
+        <div class="navbar theme-dark">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner sliding">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon icon-back"></i>
+                        <span>Назад</span>
+
+                    </a>
+
+                </div>
+
+                <div class="title">{{item.name}}</div>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            {{#js_if "this.item.category == 'Ароматы'"}}
+
+                <div class="item-image aroma" style="background-image: url('{{item.image}}')"></div>
+
+            {{else}}
+
+                <div class="item-image flakon" style="background-image: url('{{js "this.item.offers[this.item.activeOffer].image"}}')"></div>
+
+            {{/js_if}}
+
+            <div class="padding item-info bg-color-white">
+
+                {{#js_if "this.item.category == 'Ароматы'"}}
+
+                    <div class="text-color-gray">Напоминает</div>
+
+                {{/js_if}}
+
+                <div class="block-title no-margin-top no-margin-horizontal proxima-nova-cond-bold block-title-medium">{{item.name}}</div>
+
+                {{#js_if "this.item.description.length > 0"}}
+
+                    <div class="description proxima-nova-cond-regular no-margin-bottom">{{item.description}}</div>
+
+                {{/js_if}}
+
+                <div class="list no-margin-top theme-dark">
+
+                    <ul>
+
+                        {{#if item.sku }}
+
+                        <li>
+
+                            <div class="item-content">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title">Артикул</div>
+                                    <div class="item-after">{{ item.sku }}</div>
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+                        {{/if}}
+
+                        {{#if item.brand }}
+
+                            <li>
+
+                                <div class="item-content">
+
+                                    <div class="item-inner">
+
+                                        <div class="item-title">Бренд</div>
+                                        <div class="item-after">{{ item.brand }}</div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        {{/if}}
+
+                        {{#js_if "this.item.offers[this.item.activeOffer].properties.country" }}
+
+                            <li>
+
+                                <div class="item-content">
+
+                                    <div class="item-inner">
+
+                                        <div class="item-title">Страна</div>
+
+                                        <div class="item-after">
+
+                                            {{#js_if "this.item.offers.length > 1"}}
+
+                                                <div class="choose-offer-block bg-color-primary text-color-white smart-select smart-select-init smart-select-offers" data-open-in="popover" data-close-on-select="true">
+
+                                                    <span class="choose-offer proxima-nova-cond-semibold">{{js "this.item.offers[this.item.activeOffer].properties.country"}}</span>
+
+                                                    <i class="icon material-icons">arrow_drop_down</i>
+
+                                                    <select name="offers">
+
+                                                        {{#each item.offers}}
+
+                                                            <option value="{{@index}}" {{#js_if "@root.item.activeOffer == this.@index"}}selected{{/js_if}}>{{properties.country}}</option>
+
+                                                        {{/each}}
+
+                                                    </select>
+
+                                                </div>
+
+                                            {{else}}
+
+                                                {{js "this.item.offers[this.item.activeOffer].properties.country"}}
+
+                                            {{/js_if}}
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        {{/js_if}}
+
+                        {{#js_if "this.item.offers[this.item.activeOffer].properties.brand" }}
+
+                            <li>
+
+                                <div class="item-content">
+
+                                    <div class="item-inner">
+
+                                        <div class="item-title">Производитель</div>
+                                        <div class="item-after">{{js "this.item.offers[this.item.activeOffer].properties.brand" }}</div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        {{/js_if}}
+
+                        {{#if item.properties.gender }}
+
+                            <li>
+
+                                <div class="item-content">
+
+                                    <div class="item-inner">
+
+                                        <div class="item-title">Пол</div>
+                                        <div class="item-after">{{ item.properties.gender }}</div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        {{/if}}
+
+                        {{#if item.properties.aroma_group }}
+
+                            <li>
+
+                                <div class="item-content">
+
+                                    <div class="item-inner">
+
+                                        <div class="item-title">Группы</div>
+                                        <div class="item-after">{{ join item.properties.aroma_group delimiter=", "}}</div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        {{/if}}
+
+                        {{#if item.properties.flakon_type}}
+
+                            <li>
+
+                                <div class="item-content">
+
+                                    <div class="item-inner">
+
+                                        <div class="item-title">Тип</div>
+
+                                        <div class="item-after">{{js "this.item.properties.flakon_type"}}</div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        {{/if}}
+
+                        {{#js_if "this.item.offers[this.item.activeOffer].properties.color"}}
+
+                            <li>
+
+                                <div class="item-content">
+
+                                    <div class="item-inner">
+
+                                        <div class="item-title">Цвет</div>
+
+                                        <div class="item-after">
+
+                                            {{#js_if "this.item.offers.length > 1"}}
+
+                                            <div class="choose-offer-block bg-color-primary text-color-white smart-select smart-select-init smart-select-offers" data-open-in="popover" data-close-on-select="true">
+
+                                                <span class="choose-offer proxima-nova-cond-semibold">{{js "this.item.offers[this.item.activeOffer].properties.color"}}</span>
+
+                                                <i class="icon material-icons">arrow_drop_down</i>
+
+                                                <select name="offers">
+
+                                                    {{#each item.offers}}
+
+                                                        <option value="{{@index}}" {{#js_if "@root.item.activeOffer == this.@index"}}selected{{/js_if}}>{{properties.color}}</option>
+
+                                                    {{/each}}
+
+                                                </select>
+
+                                            </div>
+
+                                            {{else}}
+
+                                                {{js "this.item.offers[this.item.activeOffer].properties.color"}}
+
+                                            {{/js_if}}
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        {{/js_if}}
+
+                        {{#if item.properties.volume}}
+
+                            <li>
+
+                                <div class="item-content">
+
+                                    <div class="item-inner">
+
+                                        <div class="item-title">Объем</div>
+
+                                        <div class="item-after">{{js "this.item.properties.volume"}} мл</div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        {{/if}}
+
+                    </ul>
+
+                </div>
+
+                {{#if item.properties.top_notes}}
+
+                    <div class="block-title no-margin-horizontal block-title-medium block-title-notes">Верхние ноты</div>
+
+                    <div class="swiper-container swiper-notes">
+
+                        <div class="swiper-wrapper">
+
+                            {{#each item.properties.top_notes }}
+
+                                <div class="swiper-slide">
+
+                                    <div class="amenity-image" style="background-image: url('{{js "app.methods.noteImage(this)"}}')"></div>
+
+                                    <div class="item-title text-color-gray text-align-center">{{this}}</div>
+
+                                </div>
+
+                            {{/each}}
+
+                        </div>
+
+                    </div>
+
+                {{/if}}
+
+                {{#if item.properties.middle_notes}}
+
+                    <div class="block-title no-margin-horizontal block-title-medium block-title-notes">Средние ноты</div>
+
+                    <div class="swiper-container swiper-notes">
+
+                        <div class="swiper-wrapper">
+
+                            {{#each item.properties.middle_notes }}
+
+                                <div class="swiper-slide">
+
+                                    <div class="amenity-image" style="background-image: url('{{js "app.methods.noteImage(this)"}}')"></div>
+
+                                    <div class="item-title text-color-gray text-align-center">{{this}}</div>
+
+                                </div>
+
+                            {{/each}}
+
+                        </div>
+
+                    </div>
+
+                {{/if}}
+
+                {{#if item.properties.base_notes}}
+
+                    <div class="block-title no-margin-horizontal block-title-medium block-title-notes">Базовые ноты</div>
+
+                    <div class="swiper-container swiper-notes">
+
+                        <div class="swiper-wrapper">
+
+                            {{#each item.properties.base_notes }}
+
+                                <div class="swiper-slide">
+
+                                    <div class="amenity-image" style="background-image: url('{{js "app.methods.noteImage(this)"}}')"></div>
+
+                                    <div class="item-title text-color-gray text-align-center">{{this}}</div>
+
+                                </div>
+
+                            {{/each}}
+
+                        </div>
+
+                    </div>
+
+                {{/if}}
+
+                {{#if item.properties.notes}}
+
+                    <div class="block-title no-margin-horizontal block-title-medium block-title-notes">Ноты</div>
+
+                    <div class="swiper-container swiper-notes">
+
+                        <div class="swiper-wrapper">
+
+                            {{#each item.properties.notes }}
+
+                                <div class="swiper-slide">
+
+                                    <div class="amenity-image" style="background-image: url('{{js "app.methods.noteImage(this)"}}')"></div>
+
+                                    <div class="item-title text-color-gray text-align-center">{{this}}</div>
+
+                                </div>
+
+                            {{/each}}
+
+                        </div>
+
+                    </div>
+
+                {{/if}}
+
+                {{#js_if "this.item.offers[this.item.activeOffer].price[this.item.priceType] > 0"}}
+
+                    <div class="block-price padding-bottom text-color-black">
+
+                        <div class="item-price text-align-center padding-top">
+
+                            <div class="total display-inline-block proxima-nova-cond-bold">
+
+                                <span>{{js "this.item.offers[this.item.activeOffer].price[this.item.priceType]"}}</span> ₽
+
+                            </div>
+
+                            {{#js_if "this.item.category == 'Ароматы'"}}
+
+                                <div class="gramm padding-left display-inline-block text-align-left text-color-gray">
+
+                                    1мл - <span>{{js "this.item.offers[this.item.activeOffer].price[this.item.priceType]"}}</span> ₽
+
+                                </div>
+
+                            {{else}}
+
+                                {{#js_if "app.params.clientType() == 'wholesale'"}}
+
+                                    <div class="gramm padding-left display-inline-block text-align-left text-color-gray">
+
+                                        1шт - <span>{{js "this.item.offers[this.item.activeOffer].price[this.item.priceType]"}}</span> ₽
+
+                                    </div>
+
+                                {{/js_if}}
+
+                            {{/js_if}}
+
+                        </div>
+
+                        {{#js_if "this.item.offers[this.item.activeOffer].properties.active !== '0'" }}
+
+                            {{#js_if "this.item.category == 'Ароматы'"}}
+
+                                {{#js_if "app.params.clientType() == 'retail'"}}
+
+                                    <div class="segmented choose-aroma-type segmented-strong margin-vertical">
+
+                                        <button class="button button-active button-large">Духи</button>
+
+                                        <button class="button button-large">Масло</button>
+
+                                    </div>
+
+                                    <div class="text-color-gray text-align-center aroma-type-desc margin-bottom">
+
+                                        <b>Масло</b> - концентрат в чистом виде, без добавления спирта.
+
+                                        <br>
+
+                                        <b>Духи</b> - парфюмерная вода и масло (концентрация смешивания 40% масла и 60% этанола)
+
+                                    </div>
+
+                                {{/js_if}}
+
+                                <div class="stepper display-block width-100">
+
+                                    <div class="stepper-inner row">
+
+                                        <div class="minus padding-horizontal text-color-primary proxima-nova-cond-semibold">-</div>
+
+                                        <div class="value text-align-center proxima-nova-cond-regular"><span>{{js "app.params.minAromaVolume()"}}</span> мл</div>
+
+                                        <div class="plus padding-horizontal text-color-primary proxima-nova-cond-semibold">+</div>
+
+                                    </div>
+
+                                </div>
+
+                                {{#js_if "app.params.clientType() == 'retail'"}}
+
+                                    <div class="choose-flakon button-large margin-bottom button button-outline text-color-primary">
+
+                                        <span class="image margin-bottom display-none"></span>
+
+                                        <span class="action"><i class="icon f7-icons">plus</i>Выбрать флакон</span>
+
+                                    </div>
+
+                                {{/js_if}}
+
+                                <div class="button add-to-cart button-fill button-large">
+
+                                    <i class="icon f7-icons">cart_badge_plus</i>
+
+                                    <span>Купить</span>
+
+                                </div>
+
+                            {{else}}
+
+                                {{#js_if "app.params.clientType() == 'wholesale'"}}
+
+                                    <div class="stepper display-block width-100">
+
+                                        <div class="stepper-inner row">
+
+                                            <div class="minus padding-horizontal text-color-primary proxima-nova-cond-semibold">-</div>
+
+                                            <div class="value text-align-center proxima-nova-cond-regular"><span>{{js "app.params.minFlakonsQuantity()"}}</span> шт</div>
+
+                                            <div class="plus padding-horizontal text-color-primary proxima-nova-cond-semibold">+</div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="button add-to-cart button-fill button-large">
+
+                                        <i class="icon f7-icons">cart_badge_plus</i>
+
+                                        <span>Купить</span>
+
+                                    </div>
+
+                                {{else}}
+
+                                    {{#if chooseFlakon}}
+
+                                        <div class="margin-vertical">
+
+                                            <button @click="choose" class="button button-fill button-large">Выбрать</button>
+
+                                        </div>
+
+                                    {{/if}}
+
+                                {{/js_if}}
+
+                            {{/js_if}}
+
+                        {{else}}
+
+                            <div class="padding text-color-red proxima-nova-cond-bold text-align-center not-empty">Товар распродан.</div>
+
+                        {{/js_if}}
+
+                    </div>
+
+                {{/js_if}}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+    {{this}} {
+        background-image: linear-gradient(to bottom, #1f1d1c, #0d0903);
+    }
+
+    {{this}} .not-empty {
+        font-size: 18px;
+    }
+    .description {
+        font-size: 16px;
+        line-height: 1.38;
+    }
+
+    .block-price {
+        background: rgba(238, 238, 238, 0.7) !important;
+        margin: 0 -15px;
+        margin-top: 30px;
+        padding: 0 15px;
+    }
+
+    .item-price {
+
+    }
+
+    .item-price .gramm {
+        font-size: 15px;
+        line-height: 45px;
+    }
+
+    .item-price .total {
+        font-size: 36px;
+    }
+
+    .block-title {
+        white-space: normal;
+    }
+    .item-image {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: #fff;
+        height: 300px;
+    }
+
+    .item-image.flakon {
+        background-size: cover;
+    }
+
+    .item-image.aroma {
+        background-size: contain;
+    }
+
+    .stepper {
+        height: 46px;
+        margin-bottom: 35px;
+        margin-top: 35px;
+    }
+
+    .stepper .stepper-inner {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .stepper .minus, .stepper .plus {
+        font-size: 31px;
+        line-height: 44px;
+    }
+
+    .stepper .plus {
+
+    }
+
+    .stepper .value {
+        width: 118px;
+        height: 44px;
+        border-radius: 2px;
+        border: solid 1px #dddddd;
+        line-height: 44px;
+        font-size: 20px;
+    }
+
+    .choose-flakon .image {
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-size: auto 30px;
+        background-position: center;
+        margin: 0 auto;
+        position: absolute;
+        top: 4px;
+        left: 60px;
+    }
+
+    .choose-flakon .action {
+
+    }
+
+    .block-title-buy {
+        margin-bottom: 30px;
+    }
+
+    {{this}} .aroma-type-desc {
+                 font-size: 10px;
+             }
+
+    {{this}} .list ul {
+                 border-radius: 3px
+             }
+
+    .list .item-title {
+        white-space: normal;
+    }
+    .list .item-after {
+        max-width: 65%;
+        white-space: normal;
+        text-align: right;
+    }
+
+    {{this}} .block-title-notes {
+                 margin-bottom: 20px;
+             }
+
+    {{this}} .swiper-notes .swiper-slide {
+                 width: 60px;
+                 height: 100px;
+             }
+
+    {{this}} .swiper-notes .amenity-image {
+                 background-size: cover;
+                 width: 100%;
+                 height: 60px;
+                 border-radius: 50%;
+                 border: 3px solid var(--f7-theme-color);
+             }
+
+    {{this}} .swiper-notes .item-title {
+                 font-size: 14px;
+                 margin-top: 10px;
+             }
+
+
+    {{this}} .smart-select-offers {
+                 border-radius: 3px;
+                 padding: 5px 0px 5px 10px;
+             }
+
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            var component = this;
+
+            return {
+                item: {
+                    priceType: app.params.clientType() =='retail' ? 'perfume' : 'wholesale',
+                    aromaType:  app.params.clientType() =='retail' ? 'Духи' : 'Масло',
+                    type: 'aroma',
+                    activeOffer: 0
+                }
+            }
+
+        },
+        methods: {
+            choose: function () {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                var activeOfferIndex = component.item.activeOffer;
+                var activeOffer = component.item.offers[activeOfferIndex];
+
+                var chooseFlakonButton = $$('.view.tab-active').find('.page-previous[data-name="item"]').find('.choose-flakon');
+
+                chooseFlakonButton.find('.image').css('background-image', 'url('+ activeOffer.image +')').removeClass('display-none');
+
+                chooseFlakonButton.find('.image').attr('data-id', activeOffer.id);
+                chooseFlakonButton.find('.image').attr('data-name', component.item.name);
+                chooseFlakonButton.find('.image').attr('data-volume', component.item.properties.volume);
+                chooseFlakonButton.find('.image').attr('data-image', activeOffer.image);
+                chooseFlakonButton.find('.image').attr('data-color', activeOffer.properties.color);
+                chooseFlakonButton.find('.image').attr('data-price', activeOffer.price.main);
+
+                chooseFlakonButton.find('.action').html('Изменить флакон');
+
+                component.$router.back({
+                    animate: false
+                });
+
+                app.views.current.router.back();
+
+            },
+            changeType: function () {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+                var priceType;
+                var aromaType = page.find('.choose-aroma-type').find('.button-active').text();
+
+                if (aromaType == 'Масло') {
+
+                    priceType = 'main';
+
+                } else {
+
+                    priceType = 'perfume';
+
+                }
+
+                component.item.aromaType = aromaType;
+                component.item.priceType = priceType;
+
+                component.$update(function () {
+
+                    setTimeout(function () {
+
+                        component.stepper.plus();
+                        component.stepper.minus();
+
+                    });
+
+                });
+
+            }
+        },
+        on: {
+
+            pageInit: function() {
+
+                var component = this;
+                var app = component.$app;
+                var page = component.$el;
+
+                component.$update();
+
+                var activeOfferIndex = component.item.activeOffer;
+                var activeOffer = component.item.offers[activeOfferIndex];
+
+                if (component.item.category == 'Ароматы') {
+
+                    activeOffer.image = component.item.image;
+
+                    var photoBrowserImage = app.photoBrowser.create({
+                        photos: [component.item.image],
+                        routableModals: false,
+                        theme: 'dark'
+                    });
+
+                    var swiperNotes = new Swiper('.swiper-notes', {
+                        spaceBetween: 30,
+                        freeMode: true,
+                        slidesPerView: 'auto'
+                    });
+
+                    component.stepper = app.stepper.create({
+                        el: page.find('.stepper'),
+                        autorepeatDynamic: true,
+                        min: app.params.minAromaVolume(),
+                        max: 100000,
+                        valueEl: page.find('.stepper').find('.value').find('span'),
+                        on: {
+                            change: function (stepper, value) {
+
+                                var sum = (value * activeOffer.price[component.item.priceType]).toLocaleString('ru-RU');
+
+                                page.find('.item-price').find('.total').find('span').html(sum);
+
+                            }
+                        }
+                    });
+
+                    var stepperKeypad = app.keypad.create({
+                        openIn: 'popover',
+                        dotButton: false,
+                        routableModals: false,
+                        toolbar: false,
+                        inputEl: page.find('.stepper').find('.value'),
+                        type: 'numpad',
+                        on: {
+                            change: function (keypad, value) {
+
+                                if (value >= app.params.minAromaVolume()) {
+
+                                    component.stepper.setValue(value);
+
+                                } else {
+
+                                    component.stepper.setValue( app.params.minAromaVolume() );
+
+                                }
+
+                            }
+                        }
+                    });
+
+                    page.find('.choose-flakon').on('click', function () {
+
+                        component.$router.navigate('/main/items', {
+                            context: {
+                                chooseFlakon: true,
+                                minVolume: component.stepper.getValue(),
+                                flakons: true,
+                                filter: {
+                                    category: 3
+                                }
+                            }
+                        });
+
+                    });
+
+                    page.find('.choose-aroma-type').find('.button').on('click', function () {
+
+                        page.find('.choose-aroma-type').find('.button').removeClass('button-active');
+
+                        $$(this).addClass('button-active');
+
+                        component.changeType();
+
+                    });
+
+                }
+
+                if (component.item.category == 'Флаконы') {
+
+                    if (app.params.clientType() == 'retail') {
+
+                        component.item.priceType = 'main';
+
+                        component.$update();
+
+                    }
+
+                    var photoBrowserImage = app.photoBrowser.create({
+                        photos: [component.item.offers[activeOfferIndex].image],
+                        routableModals: false,
+                        theme: 'dark'
+                    });
+
+                    component.stepper = app.stepper.create({
+                        el: page.find('.stepper'),
+                        autorepeatDynamic: true,
+                        min: app.params.minFlakonsQuantity(),
+                        max: 100000,
+                        valueEl: page.find('.stepper').find('.value').find('span'),
+                        on: {
+                            change: function (stepper, value) {
+
+                                var sum = (value * activeOffer.price[component.item.priceType]).toLocaleString('ru-RU');
+
+                                page.find('.item-price').find('.total').find('span').html(sum);
+
+                            }
+                        }
+                    });
+
+                    var stepperKeypad = app.keypad.create({
+                        openIn: 'popover',
+                        dotButton: false,
+                        routableModals: false,
+                        toolbar: false,
+                        inputEl: page.find('.stepper').find('.value'),
+                        type: 'numpad',
+                        on: {
+                            change: function (keypad, value) {
+
+                                if (value >= app.params.minFlakonsQuantity()) {
+
+                                    component.stepper.setValue(value);
+
+                                } else {
+
+                                    component.stepper.setValue( app.params.minFlakonsQuantity() );
+
+                                }
+
+                            }
+                        }
+                    });
+
+                }
+
+                page.find('.item-image').on('click', function () {
+
+                    photoBrowserImage.open(0);
+
+                });
+
+                page.find('select[name="offers"]').on('change', function () {
+
+                    var value = $$(this).val();
+
+                    var offerIndex = component.item.offers.findIndex(function (offer, index) {
+
+                        return index == value;
+
+                    });
+
+                    component.item.activeOffer = offerIndex;
+
+                    activeOfferIndex = component.item.activeOffer;
+                    activeOffer = component.item.offers[activeOfferIndex];
+
+                    if (component.item.category == 'Ароматы') {
+
+                        activeOffer.image = component.item.image;
+
+                    }
+
+                    component.$update();
+
+                });
+
+                if (app.params.clientType() == 'wholesale') {
+
+                    component.stepper.plus();
+                    component.stepper.minus();
+
+                }
+
+                page.find('.stepper').find('.minus').on('click', function () {
+
+                    component.stepper.minus();
+
+                });
+
+                page.find('.stepper').find('.plus').on('click', function () {
+
+                    if (component.item.category == 'Ароматы') {
+
+                        var flakon = page.find('.choose-flakon').find('.image');
+
+                        if (flakon.hasClass('display-none')) {
+
+                            component.stepper.plus();
+
+                        } else {
+
+                            if (component.stepper.getValue() < Number(flakon.data('volume')) || app.params.clientType() == 'wholesale') {
+
+                                component.stepper.plus();
+
+                            } else {
+
+                                app.toast.create({
+                                    text: 'Выбранный флакон не вмещает больше объема',
+                                    position: 'top',
+                                    cssClass: 'bg-color-red'
+                                }).open();
+
+                            }
+
+                        }
+
+                    }
+
+                    if (component.item.category == 'Флаконы') {
+
+                        component.stepper.plus();
+
+                    }
+
+                });
+
+                page.find('.stepper').find('.value').on('click', function () {
+
+                    stepperKeypad.open();
+
+                });
+
+                page.find('.add-to-cart').on('click', function () {
+
+                    if (component.item.category == 'Ароматы') {
+
+                        component.item.offers[activeOfferIndex].volume = component.stepper.value;
+                        component.item.offers[activeOfferIndex].type = component.item.type;
+                        component.item.offers[activeOfferIndex].aromaType = component.item.aromaType;
+                        component.item.offers[activeOfferIndex].priceType = component.item.priceType;
+                        component.item.offers[activeOfferIndex].uid = Date.now();
+
+                        if (app.params.clientType() == 'retail') {
+
+                            var flakon = page.find('.choose-flakon').find('.image');
+
+                            if (flakon.hasClass('display-none')) {
+
+                                app.dialog.alert('Выберите флакон!');
+
+                            } else {
+
+                                component.item.offers[activeOfferIndex].flakon = {
+                                    id: flakon.data('id'),
+                                    image: flakon.data('image'),
+                                    title: flakon.data('title'),
+                                    volume: flakon.data('volume'),
+                                    color: flakon.data('color'),
+                                    price: flakon.data('price')
+                                }
+
+                                app.methods.addToCart(component.item.offers[activeOfferIndex], function () {
+
+                                    app.dialog.alert('Товар добавлен в корзину');
+
+                                });
+
+                            }
+
+                        } else {
+
+                            var cart;
+
+                            if (localStorage.cart !== undefined) {
+
+                                cart = JSON.parse(localStorage.cart);
+
+                            } else {
+
+                                cart = [];
+
+                            }
+
+                            var index = cart.findIndex(function (offer) {
+
+                                return offer.id == component.item.offers[activeOfferIndex].id;
+
+                            });
+
+                            if (index !== -1) {
+
+                                app.dialog.alert('Вы уже добавляли этот товар в корзину');
+
+                            } else {
+
+                                app.methods.addToCart(component.item.offers[activeOfferIndex], function () {
+
+                                    app.dialog.alert('Товар добавален в корзину');
+
+                                });
+
+                            }
+
+                        }
+
+                    }
+
+                    if (component.item.category == 'Флаконы') {
+
+                        component.item.offers[activeOfferIndex].uid = Date.now();
+                        component.item.offers[activeOfferIndex].count = component.stepper.value;
+                        component.item.offers[activeOfferIndex].volume = component.item.properties.volume;
+                        component.item.offers[activeOfferIndex].type = component.item.type;
+                        component.item.offers[activeOfferIndex].priceType = component.item.priceType;
+
+                        var cart;
+
+                        if (localStorage.cart !== undefined) {
+
+                            cart = JSON.parse(localStorage.cart);
+
+                        } else {
+
+                            cart = [];
+
+                        }
+
+                        var offerIndex = cart.findIndex(function (offer) {
+
+                            return offer.id == activeOffer.id;
+
+                        });
+
+                        if (offerIndex !== -1) {
+
+                            app.dialog.alert('Вы уже добавляли этот товар в корзину');
+
+                        } else {
+
+                            app.methods.addToCart(component.item.offers[activeOfferIndex], function () {
+
+                                app.dialog.alert('Товар добавален в корзину');
+
+                            });
+
+                        }
+
+                    }
+
+                });
+
+            }
+
+        }
+
+    }
+
+</script>
