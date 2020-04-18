@@ -150,7 +150,7 @@
 
                             {{#each items}}
 
-                                <list-item-2 {{#if ../minVolume}}{{#js_if "@root.minVolume > this.properties.volume"}}class="item-disabled"{{/js_if}}{{/if}} id="{{id}}" image="{{offers[0].image}}" name="{{name}}" price="{{#js_if "app.params.clientType() == 'retail'"}}{{offers[0].price.main}}{{else}}{{offers[0].price.wholesale}}{{/js_if}}"></list-item-2>
+                                <list-item-2 {{#if ../minVolume}}{{#js_if "Number(@root.minVolume) !== Number(this.properties.volume)"}}class="item-disabled"{{/js_if}}{{/if}} id="{{id}}" image="{{offers[0].image}}" name="{{name}}" price="{{#js_if "app.params.clientType() == 'retail'"}}{{offers[0].price.main}}{{else}}{{offers[0].price.wholesale}}{{/js_if}}"></list-item-2>
 
                             {{/each}}
 
